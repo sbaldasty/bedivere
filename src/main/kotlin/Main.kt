@@ -1,4 +1,4 @@
-package com.bitflippin
+package com.bitflippin.bedivere
 
 import org.antlr.v4.runtime.CharStream
 import org.antlr.v4.runtime.CharStreams
