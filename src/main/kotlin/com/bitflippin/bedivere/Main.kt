@@ -1,5 +1,6 @@
 package com.bitflippin.bedivere
 
+import com.bitflippin.bedivere.model.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -16,7 +17,7 @@ fun main() {
         // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
         println("i = $i")
     }
-    val json = Json.encodeToString(ArgMap(listOf(Source()), listOf(Claim()), listOf(Ideology())))
+    val json = Json.encodeToString(ArgMap(listOf(Citation()), listOf(Claim()), listOf(Ideology()), listOf(Source()), listOf(Support())))
     val asdf = Json.decodeFromString<ArgMap>(json)
     println(json)
     println(asdf)
