@@ -1,11 +1,12 @@
 package com.bitflippin.bedivere
 
+import com.bitflippin.bedivere.antlr.BedivereLexer
+import com.bitflippin.bedivere.antlr.BedivereParser
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.antlr.v4.runtime.CharStream
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
-
-import com.bitflippin.bedivere.antlr.BedivereLexer
-import com.bitflippin.bedivere.antlr.BedivereParser
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -23,15 +24,11 @@ fun main() {
     val lexer = BedivereLexer(readSampleFile())
     val tokens = CommonTokenStream(lexer)
     val parser = BedivereParser(tokens)
-    while (parser.currentToken.type != BedivereParser.EOF) {
-        val nextLine = parser.line()
-        val kw = nextLine.keyValue()
-        val key = kw.key().text
-        val value = kw.separatorAndValue().chars()
-            .joinToString(separator = "") { it.text }
 
-        println("$key = $value")
-    }
+    val json = Json.encodeToString(ArgMap(listOf(Source()), listOf(Claim()), listOf(Ideology())))
+    val asdf = Json.decodeFromString<ArgMap>(json)
+    println(json)
+    println(asdf)
 }
 
 private fun readSampleFile(): CharStream {

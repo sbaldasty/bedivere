@@ -1,5 +1,6 @@
 plugins {
-    kotlin("jvm") version "2.0.0"
+    kotlin("jvm") version "2.0.10"
+    kotlin("plugin.serialization") version "2.0.10"
     antlr
 }
 
@@ -11,6 +12,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
     antlr("org.antlr:antlr4:4.13.2")
     testImplementation(kotlin("test"))
 }
