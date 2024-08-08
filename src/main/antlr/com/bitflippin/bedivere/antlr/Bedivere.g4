@@ -1,57 +1,72 @@
 grammar Bedivere;
 
-parse
-  :  line* EOF
-  ;
+argmap : EOF ;
 
-line
-  :  Space* (keyValue | LineBreak)
-  ;
+idlist : (ID DOTSEP)* ;
 
-keyValue
-  :  key separatorAndValue eol
-  ;
+ideology : ;
 
-key
-  :  keyChar+
-  ;
+source :
+    IDHDR id
+    TITLEHDR title
+    URLHDR url
+    DESCRHDR descr ;
 
-keyChar
-  :  AlphaNum
-  ;
+support :
+    DESCRHDR descr
+    STRENGTHHDR strength NEWLINE
+    EVIDENCEHDR idlist NEWLINE ;
 
-separatorAndValue
-  :  (Space | Equals) chars+
-  ;
+idline : IDHDR ID NEWLINE ;
+titleline : TITLEHDR STRING ;
+descrline : DESCRHDR STRING ;
+urlline : URLHDR STRING ;
+enthememeline : ENTHEMEMEHDR yesno ;
+confidenceline : CONFIDENCEHDR confidence NEWLINE ;
+strengthline : STRENGTHHDR strength NEWLINE ;
+evidenceline : EVIDENCEHDR idlist NEWLINE ;
 
-chars
-  :  AlphaNum
-  |  Space
-  |  Equals
-  ;
+id : NUMBER ;
+title : STRING ;
+descr : STRING ;
+url : STRING ;
+enthememe : yesno ;
+confidence : TRUE | LIKELY | NEUTRAL | UNLIKELY | FALSE ;
+strength : SOUND | STRONG | MODERATE | WEAK | NONE ;
+yesno : YES | NO ;
 
-eol
-  :  LineBreak
-  |  EOF
-  ;
+IDHDR : WHITESPACE* 'id: ' ;
+TITLEHDR : WHITESPACE* 'title: ' ;
+DESCRHDR : WHITESPACE* 'descr: ' ;
+URLHDR : WHITESPACE* 'url: ' ;
+ENTHEMEMEHDR : WHITESPACE* 'enthememe: ' ;
+CONFIDENCEHDR : WHITESPACE* 'confidence: ' ;
+STRENGTHHDR : WHITESPACE* 'strength: ' ;
+EVIDENCEHDR : WHITESPACE* 'evidence: ' ;
 
-Equals
-  : '='
-  ;
+SOURCES : '[Sources]' ;
+CLAIMS : '[Claims]' ;
+IDEOLOGIES : '[Ideologies]' ;
 
-LineBreak
-  :  '\r'? '\n'
-  |  '\r'
-  ;
+TRUE : 'TRUE' ;
+LIKELY : 'LIKELY' ;
+NEUTRAL : 'NEUTRAL' ;
+UNLIKELY : 'UNLIKELY' ;
+FALSE : 'FALSE' ;
 
-Space
-  :  ' '
-  |  '\t'
-  |  '\f'
-  ;
+SOUND : 'SOUND' ;
+STRONG : 'STRONG' ;
+MODERATE : 'MODERATE' ;
+WEAK : 'WEAK' ;
+NONE : 'NONE' ;
 
-AlphaNum
-  :  'a'..'z'
-  |  'A'..'Z'
-  |  '0'..'9'
-  ;
+YES : 'YES' ;
+NO : 'NO' ;
+
+NUMBER : ('0'..'9')+ ;
+STRING : ~[\r\n]* NEWLINE ;
+NEWLINE : ('\r'? '\n')+ ;
+DOTSEP : '.' WHITESPACE* ;
+LBRACE : '{' ;
+RBRACE : '}' ;
+WHITESPACE : ' ' ;

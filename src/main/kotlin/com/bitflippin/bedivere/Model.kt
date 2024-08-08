@@ -24,7 +24,7 @@ data class Claim(
 )
 
 data class Ideology(
-    var name: String,
+    var title: String,
     var descr: String,
     val claims: List<Claim>,
     val id: Int
