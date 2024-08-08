@@ -4,23 +4,23 @@ import kotlinx.serialization.Serializable
 
 @JvmInline
 @Serializable
-value class CitationId(private val id: Int)
+value class CitationId(val value: Int)
 
 @JvmInline
 @Serializable
-value class ClaimId(private val id: Int)
+value class ClaimId(val value: Int)
 
 @JvmInline
 @Serializable
-value class IdeologyId(private val id: Int)
+value class IdeologyId(val value: Int)
 
 @JvmInline
 @Serializable
-value class SourceId(private val id: Int)
+value class SourceId(val value: Int)
 
 @JvmInline
 @Serializable
-value class SupportId(private val id: Int)
+value class SupportId(val value: Int)
 
 @Serializable
 data class ArgMap(
