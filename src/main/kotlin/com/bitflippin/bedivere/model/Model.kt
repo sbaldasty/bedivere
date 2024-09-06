@@ -23,7 +23,7 @@ value class SourceId(val value: Int)
 value class SupportId(val value: Int)
 
 @Serializable
-data class ArgMap(
+data class Argmap(
     var citations: List<Citation> = ArrayList(),
     var claims: List<Claim> = ArrayList(),
     var ideologies: List<Ideology> = ArrayList(),

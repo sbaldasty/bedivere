@@ -1,23 +1,28 @@
 package com.bitflippin.bedivere.model
 
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import java.io.InputStream
+import java.io.File
 
-fun loadModel(s: String) {
-    Json.decodeFromString<ArgMap>(s)
+fun loadModel(file: File) {
+    Json.decodeFromString<Argmap>(file.readText())
 }
 
-fun ArgMap.addCitation()
+fun saveModel(file: File, argMap: Argmap) {
+    file.writeText(Json.encodeToString(argMap))
+}
+
+fun Argmap.addCitation()
         = Citation(CitationId(this.citations.maxOf { x -> x.id.value }))
 
-fun ArgMap.addClaim()
+fun Argmap.addClaim()
         = Claim(ClaimId(this.claims.maxOf { x -> x.id.value }))
 
-fun ArgMap.addIdeology()
+fun Argmap.addIdeology()
         = Ideology(IdeologyId(this.ideologies.maxOf { x -> x.id.value }))
 
-fun ArgMap.addSource()
+fun Argmap.addSource()
         = Source(SourceId(this.sources.maxOf { x -> x.id.value }))
 
-fun ArgMap.addSupport()
+fun Argmap.addSupport()
         = Support(SupportId(this.supports.maxOf { x -> x.id.value }))
