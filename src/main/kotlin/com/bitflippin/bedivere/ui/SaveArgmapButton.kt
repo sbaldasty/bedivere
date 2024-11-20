@@ -1,6 +1,6 @@
 package com.bitflippin.bedivere.ui
 
-import com.bitflippin.bedivere.EditorState
+import com.bitflippin.bedivere.editor.EditorState
 import com.bitflippin.bedivere.model.saveModel
 import javax.swing.JButton
 
