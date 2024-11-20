@@ -12,7 +12,8 @@ fun main() {
             devfile.writeText("{}")
         }
         val argmap = loadModel(devfile)
-        val frame = MainFrame(argmap)
+        val state = EditorState(argmap, devfile)
+        val frame = MainFrame(state)
         frame.isVisible = true
     }
 }

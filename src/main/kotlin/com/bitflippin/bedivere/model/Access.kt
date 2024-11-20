@@ -7,8 +7,8 @@ import java.io.File
 fun loadModel(file: File)
         = Json.decodeFromString<Argmap>(file.readText())
 
-fun saveModel(file: File, argMap: Argmap)
-        = file.writeText(Json.encodeToString(argMap))
+fun saveModel(file: File, argmap: Argmap)
+        = file.writeText(Json.encodeToString(argmap))
 
 fun Argmap.addCitation()
         = Citation(CitationId(this.citations.maxOf { x -> x.id.value }))
