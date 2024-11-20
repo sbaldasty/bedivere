@@ -24,11 +24,11 @@ value class SupportId(val value: Int)
 
 @Serializable
 data class Argmap(
-    var citations: List<Citation> = ArrayList(),
-    var claims: List<Claim> = ArrayList(),
-    var ideologies: List<Ideology> = ArrayList(),
-    var sources: List<Source> = ArrayList(),
-    var supports: List<Support> = ArrayList()
+    var citations: MutableList<Citation> = ArrayList(),
+    var claims: MutableList<Claim> = ArrayList(),
+    var ideologies: MutableList<Ideology> = ArrayList(),
+    var sources: MutableList<Source> = ArrayList(),
+    var supports: MutableList<Support> = ArrayList()
 )
 
 @Serializable
@@ -45,10 +45,10 @@ data class Claim(
     var title: String = "",
     var description: String = "",
     var confidence: Confidence = Confidence.UNEXAMINED,
-    var citations: List<Citation> = ArrayList(),
-    var supportIds: List<SupportId> = ArrayList(),
-    var counterSupportIds: List<SupportId> = ArrayList(),
-    var neighbors: List<ClaimId> = ArrayList()
+    var citations: MutableList<Citation> = ArrayList(),
+    var supportIds: MutableList<SupportId> = ArrayList(),
+    var counterSupportIds: MutableList<SupportId> = ArrayList(),
+    var neighbors: MutableList<ClaimId> = ArrayList()
 )
 
 @Serializable
@@ -56,7 +56,7 @@ data class Ideology(
     var id: IdeologyId = IdeologyId(0),
     var title: String = "",
     var description: String = "",
-    var claimIds: List<ClaimId> = ArrayList()
+    var claimIds: MutableList<ClaimId> = ArrayList()
 )
 
 @Serializable
@@ -72,8 +72,8 @@ data class Support(
     var id: SupportId = SupportId(0),
     var description: String = "",
     var strength: Strength = Strength.UNEXAMINED,
-    var evidence: List<Int> = ArrayList(),
-    var citationIds: List<CitationId> = ArrayList()
+    var evidence: MutableList<Int> = ArrayList(),
+    var citationIds: MutableList<CitationId> = ArrayList()
 )
 
 enum class Confidence { TRUE, LIKELY, NEUTRAL, UNLIKELY, FALSE, UNEXAMINED }
