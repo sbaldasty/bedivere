@@ -11,16 +11,16 @@ fun saveModel(file: File, argmap: Argmap)
         = file.writeText(Json.encodeToString(argmap))
 
 fun Argmap.addCitation()
-        = Citation(CitationId(this.citations.maxOf { x -> x.id.value }))
+        = Citation(CitationId(this.citations.maxOfOrNull { x -> x.id.value } ?: 1))
 
 fun Argmap.addClaim()
-        = Claim(ClaimId(this.claims.maxOf { x -> x.id.value }))
+        = Claim(ClaimId(this.claims.maxOfOrNull { x -> x.id.value } ?: 1))
 
 fun Argmap.addIdeology()
-        = Ideology(IdeologyId(this.ideologies.maxOf { x -> x.id.value }))
+        = Ideology(IdeologyId(this.ideologies.maxOfOrNull { x -> x.id.value } ?: 1))
 
 fun Argmap.addSource()
-        = Source(SourceId(this.sources.maxOf { x -> x.id.value }))
+        = Source(SourceId(this.sources.maxOfOrNull { x -> x.id.value } ?: 1))
 
 fun Argmap.addSupport()
-        = Support(SupportId(this.supports.maxOf { x -> x.id.value }))
+        = Support(SupportId(this.supports.maxOfOrNull { x -> x.id.value } ?: 1))
