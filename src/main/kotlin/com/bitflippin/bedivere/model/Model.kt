@@ -35,7 +35,7 @@ data class Argmap(
 data class Citation(
     var id: CitationId = CitationId(0),
     var description: String = "",
-    var enthememe: Boolean = false,
+    var enthymeme: Boolean = false,
     var sourceId: SourceId = SourceId(0)
 )
 
