@@ -24,7 +24,7 @@ private class FocusLostAdapter(private val listener: EditListener) : FocusAdapte
 class BoundTextField<T>(
     private val t: T,
     private val property: Property<T>,
-    listeners: MutableSet<ChangeListener<T>>
+    private val listeners: MutableSet<ChangeListener<T>>
 ) : JTextField(20) {
 
     init {
@@ -41,5 +41,9 @@ class BoundTextField<T>(
         if (t == model && change == Change.UPDATE && text == property(model)) {
             text = property(model)
         }
+    }
+
+    fun onClose() {
+        listeners.remove(this::onChange)
     }
 }

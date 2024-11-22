@@ -24,6 +24,6 @@ class MainFrame(editorState: EditorState): JFrame() {
         add(saveButton)
         add(addSourceButton)
         add(sourceList)
-        add(sourceDetail)
+        add(editorState.tabManager)
     }
 }
