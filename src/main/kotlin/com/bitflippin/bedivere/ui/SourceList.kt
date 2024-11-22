@@ -3,18 +3,22 @@ package com.bitflippin.bedivere.ui
 import com.bitflippin.bedivere.editor.Change
 import com.bitflippin.bedivere.editor.EditorState
 import com.bitflippin.bedivere.model.Source
-import javax.swing.JLabel
-import javax.swing.JPanel
+import javax.swing.DefaultListModel
+import javax.swing.JList
 
-class SourcePanel(editorState: EditorState) : JPanel() {
+class SourceList(editorState: EditorState) : JList<Source>() {
+
+    private val list = DefaultListModel<Source>()
 
     init {
+        model = list
         editorState.hub.addListener(this::onSourcesAdded)
+        list.addAll(editorState.argmap.sources)
     }
 
     fun onSourcesAdded(source: Source, change: Change) {
         when (change) {
-            Change.ADD -> add(JLabel("added $source"))
+            Change.ADD -> list.addElement(source)
             Change.REMOVE -> TODO()
             Change.UPDATE -> TODO()
         }

@@ -9,7 +9,7 @@ class MainFrame(editorState: EditorState): JFrame() {
 
     private val saveButton = SaveArgmapButton(editorState)
     private val addSourceButton = AddSourceButton(editorState)
-    private val sourcePanel = SourcePanel(editorState)
+    private val sourceList = SourceList(editorState)
 
     init {
         title = "Bedivere Argument Mapper"
@@ -20,6 +20,6 @@ class MainFrame(editorState: EditorState): JFrame() {
         layout = FlowLayout()
         add(saveButton)
         add(addSourceButton)
-        add(sourcePanel)
+        add(sourceList)
     }
 }
