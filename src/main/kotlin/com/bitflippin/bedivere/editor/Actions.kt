@@ -5,6 +5,6 @@ import com.bitflippin.bedivere.model.addSource
 
 fun addSource(editorState: EditorState): Source {
     val result = editorState.argmap.addSource()
-    editorState.hub.broadcast(result, Change.ADD)
+    broadcastChange(editorState.hub.sourceListeners, result, Change.ADD)
     return result
 }

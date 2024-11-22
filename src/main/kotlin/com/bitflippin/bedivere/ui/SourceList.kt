@@ -12,7 +12,7 @@ class SourceList(editorState: EditorState) : JList<Source>() {
 
     init {
         model = list
-        editorState.hub.addListener(this::onSourceChange)
+        editorState.hub.sourceListeners.add(this::onSourceChange)
         list.addAll(editorState.argmap.sources)
     }
 
