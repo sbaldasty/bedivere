@@ -12,11 +12,11 @@ class SourceList(editorState: EditorState) : JList<Source>() {
 
     init {
         model = list
-        editorState.hub.addListener(this::onSourcesAdded)
+        editorState.hub.addListener(this::onSourceChange)
         list.addAll(editorState.argmap.sources)
     }
 
-    fun onSourcesAdded(source: Source, change: Change) {
+    fun onSourceChange(source: Source, change: Change) {
         when (change) {
             Change.ADD -> list.addElement(source)
             Change.REMOVE -> list.removeElement(source)

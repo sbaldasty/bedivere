@@ -11,6 +11,9 @@ class MainFrame(editorState: EditorState): JFrame() {
     private val addSourceButton = AddSourceButton(editorState)
     private val sourceList = SourceList(editorState)
 
+    // FIXME Temporary
+    private val sourceDetail = SourceDetail(editorState, editorState.argmap.sources.first())
+
     init {
         title = "Bedivere Argument Mapper"
         defaultCloseOperation = EXIT_ON_CLOSE
@@ -21,5 +24,6 @@ class MainFrame(editorState: EditorState): JFrame() {
         add(saveButton)
         add(addSourceButton)
         add(sourceList)
+        add(sourceDetail)
     }
 }
