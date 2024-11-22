@@ -19,8 +19,8 @@ class SourceList(editorState: EditorState) : JList<Source>() {
     fun onSourcesAdded(source: Source, change: Change) {
         when (change) {
             Change.ADD -> list.addElement(source)
-            Change.REMOVE -> TODO()
-            Change.UPDATE -> TODO()
+            Change.REMOVE -> list.removeElement(source)
+            Change.UPDATE -> list.setElementAt(source, list.indexOf(source))
         }
     }
 }
