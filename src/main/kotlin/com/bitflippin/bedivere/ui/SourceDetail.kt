@@ -9,7 +9,8 @@ import javax.swing.JLabel
 
 class SourceDetail(
     private val editorState: EditorState,
-    private val model: Source) : TabbedPanel() {
+    private val model: Source
+) : TabbedPanel() {
 
     private val titleTextField = boundTextField(Source::title)
     private val urlTextField = boundTextField(Source::url)
