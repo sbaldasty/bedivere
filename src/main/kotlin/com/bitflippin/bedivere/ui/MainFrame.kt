@@ -14,9 +14,8 @@ class MainFrame(editorState: EditorState): JFrame() {
     private val saveButton = SaveArgmapButton(editorState)
     private val addSourceButton = AddSourceButton(editorState)
     private val sourceList = SourceList(editorState)
-
-    // FIXME Temporary
-    private val sourceDetail = SourceDetail(editorState, editorState.argmap.sources.first())
+    private val addClaimButton = AddClaimButton(editorState)
+    private val claimList = ClaimList(editorState)
 
     init {
         title = "Bedivere Argument Mapper"
@@ -26,10 +25,12 @@ class MainFrame(editorState: EditorState): JFrame() {
 
         val buttonBar = JPanel(FlowLayout())
         buttonBar.add(saveButton)
+        buttonBar.add(addClaimButton)
         buttonBar.add(addSourceButton)
         add(buttonBar, BorderLayout.NORTH)
 
         val tabbedPane = JTabbedPane()
+        tabbedPane.add("Claims", claimList)
         tabbedPane.add("Sources", sourceList)
 
         val splitPane = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tabbedPane, editorState.tabManager)

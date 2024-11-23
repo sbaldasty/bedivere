@@ -7,7 +7,7 @@ import javax.swing.JButton
 class AddSourceButton(editorState: EditorState) : JButton() {
 
     init {
-        text = "Add"
+        text = "Add Source"
         addActionListener { addSource(editorState) }
     }
 }
