@@ -28,17 +28,16 @@ class BoundTextField<T>(
 ) : JTextField(20) {
 
     init {
-        text = property(t)
+        onChange(t, Change.UPDATE)
         addEditListener {
             property.set(t, text)
             broadcastChange(listeners, t, Change.UPDATE)
         }
         listeners.add(this::onChange)
-        onChange(t, Change.UPDATE)
     }
 
     fun onChange(model: T, change: Change) {
-        if (t == model && change == Change.UPDATE && text == property(model)) {
+        if (t == model && change == Change.UPDATE && text != property(model)) {
             text = property(model)
         }
     }
