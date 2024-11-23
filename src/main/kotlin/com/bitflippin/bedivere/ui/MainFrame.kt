@@ -1,9 +1,12 @@
 package com.bitflippin.bedivere.ui
 
 import com.bitflippin.bedivere.editor.EditorState
+import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.FlowLayout
 import javax.swing.JFrame
+import javax.swing.JPanel
+import javax.swing.JSplitPane
 
 class MainFrame(editorState: EditorState): JFrame() {
 
@@ -17,13 +20,16 @@ class MainFrame(editorState: EditorState): JFrame() {
     init {
         title = "Bedivere Argument Mapper"
         defaultCloseOperation = EXIT_ON_CLOSE
-        layout = null
         size = Dimension(300, 200)
         extendedState = MAXIMIZED_BOTH
-        layout = FlowLayout()
-        add(saveButton)
-        add(addSourceButton)
-        add(sourceList)
-        add(editorState.tabManager)
+
+        val buttonBar = JPanel(FlowLayout())
+        buttonBar.add(saveButton)
+        buttonBar.add(addSourceButton)
+        add(buttonBar, BorderLayout.NORTH)
+
+        val splitPane = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sourceList, editorState.tabManager)
+        splitPane.dividerLocation = 200
+        add(splitPane, BorderLayout.CENTER)
     }
 }

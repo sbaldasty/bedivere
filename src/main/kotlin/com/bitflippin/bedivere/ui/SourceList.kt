@@ -22,7 +22,6 @@ class SourceList(editorState: EditorState) : JList<Source>() {
                         val item = model.getElementAt(index);
                         editorState.tabManager.open(SourceDetail(editorState, item))
                     }
-
                 }
             }
         })
