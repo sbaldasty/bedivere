@@ -6,6 +6,7 @@ import java.awt.Dimension
 import java.awt.FlowLayout
 import javax.swing.JFrame
 import javax.swing.JPanel
+import javax.swing.JScrollPane
 import javax.swing.JSplitPane
 import javax.swing.JTabbedPane
 
@@ -30,8 +31,8 @@ class MainFrame(editorState: EditorState): JFrame() {
         add(buttonBar, BorderLayout.NORTH)
 
         val tabbedPane = JTabbedPane()
-        tabbedPane.add("Claims", claimList)
-        tabbedPane.add("Sources", sourceList)
+        tabbedPane.add("Claims", JScrollPane(claimList))
+        tabbedPane.add("Sources", JScrollPane(sourceList))
 
         val splitPane = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tabbedPane, editorState.tabManager)
         splitPane.dividerLocation = 200
