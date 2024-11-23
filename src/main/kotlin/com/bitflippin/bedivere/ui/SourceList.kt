@@ -3,8 +3,7 @@ package com.bitflippin.bedivere.ui
 import com.bitflippin.bedivere.editor.Change
 import com.bitflippin.bedivere.editor.EditorState
 import com.bitflippin.bedivere.model.Source
-import java.awt.event.MouseAdapter
-import java.awt.event.MouseEvent
+import com.bitflippin.bedivere.swing.addDoubleClickListener
 import javax.swing.DefaultListModel
 import javax.swing.JList
 
@@ -14,17 +13,7 @@ class SourceList(editorState: EditorState) : JList<Source>() {
 
     init {
         model = list
-        addMouseListener(object : MouseAdapter() {
-            override fun mouseClicked(e: MouseEvent) {
-                if (e.clickCount == 2) {
-                    val index = locationToIndex(e.point);
-                    if (index >= 0) {
-                        val item = model.getElementAt(index);
-                        editorState.tabManager.open(SourceDetail(editorState, item))
-                    }
-                }
-            }
-        })
+        addDoubleClickListener { editorState.tabManager.open(SourceDetail(editorState, it)) }
         editorState.hub.sourceListeners.add(this::onSourceChange)
         list.addAll(editorState.argmap.sources)
     }

@@ -7,6 +7,7 @@ import java.awt.FlowLayout
 import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.JSplitPane
+import javax.swing.JTabbedPane
 
 class MainFrame(editorState: EditorState): JFrame() {
 
@@ -28,7 +29,10 @@ class MainFrame(editorState: EditorState): JFrame() {
         buttonBar.add(addSourceButton)
         add(buttonBar, BorderLayout.NORTH)
 
-        val splitPane = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sourceList, editorState.tabManager)
+        val tabbedPane = JTabbedPane()
+        tabbedPane.add("Sources", sourceList)
+
+        val splitPane = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tabbedPane, editorState.tabManager)
         splitPane.dividerLocation = 200
         add(splitPane, BorderLayout.CENTER)
     }
