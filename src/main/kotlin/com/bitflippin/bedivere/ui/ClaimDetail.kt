@@ -39,7 +39,7 @@ class ClaimDetail(
         val sourceColumn = ModularColumn(
             "Source",
             32,
-            { true },
+            { false },
             Citation::sourceId,
             DefaultTableCellRenderer(),
             DefaultCellEditor(JTextField()))
