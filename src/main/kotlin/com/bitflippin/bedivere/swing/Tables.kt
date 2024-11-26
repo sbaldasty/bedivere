@@ -1,10 +1,15 @@
 package com.bitflippin.bedivere.swing
 
+import com.bitflippin.bedivere.editor.Change
+import com.bitflippin.bedivere.editor.ChangeListener
+import java.awt.Component
+import javax.swing.JCheckBox
 import javax.swing.JTable
 import javax.swing.table.AbstractTableModel
 import javax.swing.table.TableCellEditor
 import javax.swing.table.TableCellRenderer
 import kotlin.reflect.KMutableProperty1
+
 
 class ModularColumn<T>(
     val name: String,
@@ -31,22 +36,60 @@ class ColumnDrivenTableModel<T>(
     private fun castProperty(column: ModularColumn<T>) = column.property as KMutableProperty1<T, Any>
 }
 
-class ColumnDrivenTable<T>(columns: List<ModularColumn<T>>, rows: List<T>) : JTable() {
+class ColumnDrivenTable<T>(
+    columns: List<ModularColumn<T>>,
+    rows: List<T>,
+    private val listeners: MutableSet<ChangeListener<T>>
+) : JTable() {
 
-    private val columnDrivenTableModel = ColumnDrivenTableModel(columns, rows)
+    private val copiedRows = rows.toMutableList()
+    private val columnDrivenTableModel = ColumnDrivenTableModel(columns, copiedRows)
 
     init {
         model = columnDrivenTableModel
-
         columns.zip(columnModel.columns.toList()) { m, c ->
             c.width = m.width
             c.cellRenderer = m.cellRenderer
             c.cellEditor = m.cellEditor
         }
-        // TODO Listeners
+        listeners.add(this::onChange)
+    }
+
+    fun onChange(t: T, change: Change) {
+        when (change) {
+            Change.ADD -> {
+                val index = copiedRows.size
+                copiedRows.add(t)
+                columnDrivenTableModel.fireTableRowsInserted(index, index)
+            }
+            Change.REMOVE -> {
+                val index = copiedRows.indexOf(t)
+                copiedRows.remove(t)
+                columnDrivenTableModel.fireTableRowsDeleted(index, index)
+            }
+            Change.UPDATE -> {
+                val index = copiedRows.indexOf(t)
+                columnDrivenTableModel.fireTableRowsUpdated(index, index)
+            }
+        }
     }
 
     fun onClose() {
+        listeners.remove(this::onChange)
+    }
+}
 
+internal class CheckBoxRenderer : JCheckBox(), TableCellRenderer {
+    override fun getTableCellRendererComponent(
+        table: JTable, value: Any, isSelected: Boolean,
+        hasFocus: Boolean, row: Int, column: Int
+    ): Component {
+        setSelected(value as Boolean)
+        background = if (isSelected) {
+            table.selectionBackground
+        } else {
+            table.background
+        }
+        return this
     }
 }

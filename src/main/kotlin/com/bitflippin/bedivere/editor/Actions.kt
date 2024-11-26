@@ -1,9 +1,12 @@
 package com.bitflippin.bedivere.editor
 
-import com.bitflippin.bedivere.model.Claim
-import com.bitflippin.bedivere.model.Source
-import com.bitflippin.bedivere.model.addClaim
-import com.bitflippin.bedivere.model.addSource
+import com.bitflippin.bedivere.model.*
+
+fun addCitation(editorState: EditorState, claim: Claim) {
+    val result = editorState.argmap.addCitation()
+    claim.citations.add(result)
+    broadcastChange(editorState.hub.citationListeners, result, Change.ADD)
+}
 
 fun addClaim(editorState: EditorState): Claim {
     val result = editorState.argmap.addClaim()
