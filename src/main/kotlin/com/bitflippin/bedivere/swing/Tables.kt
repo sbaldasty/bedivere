@@ -10,7 +10,6 @@ import javax.swing.table.TableCellEditor
 import javax.swing.table.TableCellRenderer
 import kotlin.reflect.KMutableProperty1
 
-
 class ModularColumn<T>(
     val name: String,
     val width: Int,
@@ -54,6 +53,8 @@ class ColumnDrivenTable<T>(
         }
         listeners.add(this::onChange)
     }
+
+    fun selection() = copiedRows[selectedRow]
 
     fun onChange(t: T, change: Change) {
         when (change) {

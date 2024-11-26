@@ -72,7 +72,6 @@ data class Support(
     var id: SupportId = SupportId(0),
     var description: String = "",
     var strength: Strength = Strength.UNEXAMINED,
-    var evidence: MutableList<Int> = ArrayList(),
     var citationIds: MutableList<CitationId> = ArrayList()
 )
 

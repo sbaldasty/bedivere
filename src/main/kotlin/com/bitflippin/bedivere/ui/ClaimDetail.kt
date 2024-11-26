@@ -17,6 +17,7 @@ class ClaimDetail(
     private val descriptionTextField = boundTextField(Claim::description)
     private val addCitationButton = AddCitationButton(editorState, model)
     private val citationTable = createCitationTable()
+    private val setCitationSourceButton = SetCitationSourceButton(editorState, { citationTable.selection() })
 
     init {
         add(JLabel("Title:"))
@@ -24,6 +25,7 @@ class ClaimDetail(
         add(JLabel("Description:"))
         add(descriptionTextField)
         add(addCitationButton)
+        add(setCitationSourceButton)
         add(JScrollPane(citationTable))
     }
 
@@ -34,6 +36,14 @@ class ClaimDetail(
     }
 
     private fun createCitationTable(): ColumnDrivenTable<Citation> {
+        val sourceColumn = ModularColumn(
+            "Source",
+            32,
+            { true },
+            Citation::sourceId,
+            DefaultTableCellRenderer(),
+            DefaultCellEditor(JTextField()))
+
         val descriptionColumn = ModularColumn(
             "Description",
             75,
@@ -50,7 +60,7 @@ class ClaimDetail(
             CheckBoxRenderer(),
             DefaultCellEditor(JCheckBox()))
 
-        val columns = listOf(descriptionColumn, enthymemeColumn)
+        val columns = listOf(sourceColumn, descriptionColumn, enthymemeColumn)
         return ColumnDrivenTable(columns, model.citations, editorState.hub.citationListeners)
     }
 

@@ -3,6 +3,7 @@ package com.bitflippin.bedivere.ui
 import com.bitflippin.bedivere.editor.Change
 import com.bitflippin.bedivere.editor.EditorState
 import com.bitflippin.bedivere.model.Source
+import com.bitflippin.bedivere.model.SourceId
 import com.bitflippin.bedivere.swing.addDoubleClickListener
 import javax.swing.DefaultListModel
 import javax.swing.JList
@@ -16,6 +17,11 @@ class SourceList(editorState: EditorState) : JList<Source>() {
         addDoubleClickListener { editorState.tabManager.open(SourceDetail(editorState, it)) }
         editorState.hub.sourceListeners.add(this::onSourceChange)
         list.addAll(editorState.argmap.sources)
+        addListSelectionListener {
+            if (!it.valueIsAdjusting) {
+                editorState.selectedSourceId = selectedValue?.id ?: SourceId(0)
+            }
+        }
     }
 
     fun onSourceChange(source: Source, change: Change) {

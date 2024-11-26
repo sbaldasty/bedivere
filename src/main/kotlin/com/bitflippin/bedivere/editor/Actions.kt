@@ -19,3 +19,8 @@ fun addSource(editorState: EditorState): Source {
     broadcastChange(editorState.hub.sourceListeners, result, Change.ADD)
     return result
 }
+
+fun setCitationSource(editorState: EditorState, citation: Citation) {
+    citation.sourceId = editorState.selectedSourceId
+    broadcastChange(editorState.hub.citationListeners, citation, Change.UPDATE)
+}
