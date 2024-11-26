@@ -3,9 +3,9 @@ package com.bitflippin.bedivere.ui
 import com.bitflippin.bedivere.editor.EditorState
 import com.bitflippin.bedivere.model.Source
 import com.bitflippin.bedivere.swing.BoundTextField
-import com.bitflippin.bedivere.swing.Property
 import com.bitflippin.bedivere.swing.TabbedPanel
 import javax.swing.JLabel
+import kotlin.reflect.KMutableProperty1
 
 class SourceDetail(
     private val editorState: EditorState,
@@ -31,6 +31,6 @@ class SourceDetail(
         descriptionTextField.onClose()
     }
 
-    private fun boundTextField(property: Property<Source>) =
+    private fun boundTextField(property: KMutableProperty1<Source, String>) =
         BoundTextField(model, property, editorState.hub.sourceListeners)
 }
