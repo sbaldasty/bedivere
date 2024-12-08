@@ -20,9 +20,9 @@ class ClaimDetail(
 
     // Stuff not ready yet
     private val addCitationButton = AddCitationButton(editorState, model)
-    private val citationTable = createCitationTable()
-    private val citationTableWrapper = AutoResizeTable(citationTable, editorState.hub.citationListeners)
-    private val setCitationSourceButton = SetCitationSourceButton(editorState) { citationTable.selection() }
+    private val citationsBinder = createCitationsBinder()
+//    private val citationTableWrapper = AutoResizeTable(citationTable, editorState.hub.citationListeners)
+    //private val setCitationSourceButton = SetCitationSourceButton(editorState) { citationTable.selection() }
 
     init {
         add(form.contentPanel)
@@ -31,11 +31,11 @@ class ClaimDetail(
     override fun onClose() {
         titleBinder.onClose()
         descriptionBinder.onClose()
-        citationTable.onClose()
-        citationTableWrapper.onClose()
+        citationsBinder.onClose()
+        //citationTableWrapper.onClose()
     }
 
-    private fun createCitationTable(): ColumnDrivenTable<Citation> {
+    private fun createCitationsBinder(): TableBinder<Citation> {
         val sourceColumn = ModularColumn(
             "Source",
             32,
@@ -61,7 +61,7 @@ class ClaimDetail(
             DefaultCellEditor(JCheckBox()))
 
         val columns = listOf(sourceColumn, descriptionColumn, enthymemeColumn)
-        return ColumnDrivenTable(columns, model.citations, editorState.hub.citationListeners)
+        return TableBinder(columns, model.citations, form.citationTable, editorState.hub.citationListeners)
     }
 
     private fun textFieldBinder(textField: JTextField, property: KMutableProperty1<Claim, String>) =

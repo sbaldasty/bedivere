@@ -38,26 +38,28 @@ class ColumnDrivenTableModel<T>(
     private fun castProperty(column: ModularColumn<T>) = column.property as KMutableProperty1<T, Any>
 }
 
-class ColumnDrivenTable<T>(
+class TableBinder<T>(
     columns: List<ModularColumn<T>>,
     rows: List<T>,
+    private val table: JTable,
     private val listeners: MutableSet<ChangeListener<T>>
-) : JTable() {
+) {
 
     private val copiedRows = rows.toMutableList()
     private val columnDrivenTableModel = ColumnDrivenTableModel(columns, copiedRows)
 
     init {
-        model = columnDrivenTableModel
-        columns.zip(columnModel.columns.toList()) { m, c ->
+        table.model = columnDrivenTableModel
+        columns.zip(table.columnModel.columns.toList()) { m, c ->
             c.width = m.width
             c.cellRenderer = m.cellRenderer
             c.cellEditor = m.cellEditor
         }
+        table.repaint()
         listeners.add(this::onChange)
     }
 
-    fun selection() = copiedRows[selectedRow]
+    fun selection() = copiedRows[table.selectedRow]
 
     fun onChange(t: T, change: Change) {
         when (change) {
@@ -97,28 +99,28 @@ internal class CheckBoxRenderer : JCheckBox(), TableCellRenderer {
         return this
     }
 }
-
-class AutoResizeTable<T>(
-    private val table: ColumnDrivenTable<T>,
-    private val listeners: MutableSet<ChangeListener<T>>
-) : JScrollPane(table) {
-    init {
-        verticalScrollBarPolicy = VERTICAL_SCROLLBAR_NEVER
-        horizontalScrollBarPolicy = HORIZONTAL_SCROLLBAR_AS_NEEDED
-        listeners.add(this::onChange)
-    }
-
-    private fun fitToTable() {
-        preferredSize = Dimension(preferredSize.width, table.rowHeight * table.rowCount)
-    }
-
-    fun onChange(t: T, change: Change) {
-        if (change == Change.ADD || change == Change.REMOVE) {
-            fitToTable()
-        }
-    }
-
-    fun onClose() {
-        listeners.remove(this::onChange)
-    }
-}
+//
+//class AutoResizeTable<T>(
+//    private val table: TableBinder<T>,
+//    private val listeners: MutableSet<ChangeListener<T>>
+//) : JScrollPane(table) {
+//    init {
+//        verticalScrollBarPolicy = VERTICAL_SCROLLBAR_NEVER
+//        horizontalScrollBarPolicy = HORIZONTAL_SCROLLBAR_AS_NEEDED
+//        listeners.add(this::onChange)
+//    }
+//
+//    private fun fitToTable() {
+//        preferredSize = Dimension(preferredSize.width, table.rowHeight * table.rowCount)
+//    }
+//
+//    fun onChange(t: T, change: Change) {
+//        if (change == Change.ADD || change == Change.REMOVE) {
+//            fitToTable()
+//        }
+//    }
+//
+//    fun onClose() {
+//        listeners.remove(this::onChange)
+//    }
+//}
