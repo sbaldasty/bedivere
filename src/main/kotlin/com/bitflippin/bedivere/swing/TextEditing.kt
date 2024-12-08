@@ -20,24 +20,25 @@ private class FocusLostAdapter(private val listener: EditListener) : FocusAdapte
     }
 }
 
-class BoundTextField<T>(
+class TextFieldBinder<T>(
+    private val textField: JTextField,
     private val t: T,
     private val property: KMutableProperty1<T, String>,
     private val listeners: MutableSet<ChangeListener<T>>
-) : JTextField(20) {
+) {
 
     init {
         onChange(t, Change.UPDATE)
-        addEditListener {
-            property.set(t, text)
+        textField.addEditListener {
+            property.set(t, textField.text)
             broadcastChange(listeners, t, Change.UPDATE)
         }
         listeners.add(this::onChange)
     }
 
     fun onChange(model: T, change: Change) {
-        if (t == model && change == Change.UPDATE && text != property(model)) {
-            text = property(model)
+        if (t == model && change == Change.UPDATE && textField.text != property(model)) {
+            textField.text = property(model)
         }
     }
 

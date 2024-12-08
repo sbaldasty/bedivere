@@ -1,10 +1,11 @@
 package com.bitflippin.bedivere.ui
 
 import com.bitflippin.bedivere.editor.EditorState
+import com.bitflippin.bedivere.form.SourceForm
 import com.bitflippin.bedivere.model.Source
-import com.bitflippin.bedivere.swing.BoundTextField
+import com.bitflippin.bedivere.swing.TextFieldBinder
 import com.bitflippin.bedivere.swing.TabbedPanel
-import javax.swing.JLabel
+import javax.swing.JTextField
 import kotlin.reflect.KMutableProperty1
 
 class SourceDetail(
@@ -12,25 +13,21 @@ class SourceDetail(
     private val model: Source
 ) : TabbedPanel() {
 
-    private val titleTextField = boundTextField(Source::title)
-    private val urlTextField = boundTextField(Source::url)
-    private val descriptionTextField = boundTextField(Source::description)
+    private val form = SourceForm()
+    private val titleBinder = textFieldBinder(form.titleTextField, Source::title)
+    private val urlBinder = textFieldBinder(form.urlTextField, Source::url)
+    private val descriptionBinder = textFieldBinder(form.descriptionTextField, Source::description)
 
     init {
-        add(JLabel("Title:"))
-        add(titleTextField)
-        add(JLabel("URL:"))
-        add(urlTextField)
-        add(JLabel("Description:"))
-        add(descriptionTextField)
+        add(form.contentPanel)
     }
 
     override fun onClose() {
-        titleTextField.onClose()
-        urlTextField.onClose()
-        descriptionTextField.onClose()
+        titleBinder.onClose()
+        urlBinder.onClose()
+        descriptionBinder.onClose()
     }
 
-    private fun boundTextField(property: KMutableProperty1<Source, String>) =
-        BoundTextField(model, property, editorState.hub.sourceListeners)
+    private fun textFieldBinder(textField: JTextField, property: KMutableProperty1<Source, String>) =
+        TextFieldBinder(textField, model, property, editorState.hub.sourceListeners)
 }

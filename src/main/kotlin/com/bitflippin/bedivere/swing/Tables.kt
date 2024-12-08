@@ -3,7 +3,10 @@ package com.bitflippin.bedivere.swing
 import com.bitflippin.bedivere.editor.Change
 import com.bitflippin.bedivere.editor.ChangeListener
 import java.awt.Component
+import java.awt.Dimension
+import java.awt.event.ComponentListener
 import javax.swing.JCheckBox
+import javax.swing.JScrollPane
 import javax.swing.JTable
 import javax.swing.table.AbstractTableModel
 import javax.swing.table.TableCellEditor
@@ -92,5 +95,30 @@ internal class CheckBoxRenderer : JCheckBox(), TableCellRenderer {
             table.background
         }
         return this
+    }
+}
+
+class AutoResizeTable<T>(
+    private val table: ColumnDrivenTable<T>,
+    private val listeners: MutableSet<ChangeListener<T>>
+) : JScrollPane(table) {
+    init {
+        verticalScrollBarPolicy = VERTICAL_SCROLLBAR_NEVER
+        horizontalScrollBarPolicy = HORIZONTAL_SCROLLBAR_AS_NEEDED
+        listeners.add(this::onChange)
+    }
+
+    private fun fitToTable() {
+        preferredSize = Dimension(preferredSize.width, table.rowHeight * table.rowCount)
+    }
+
+    fun onChange(t: T, change: Change) {
+        if (change == Change.ADD || change == Change.REMOVE) {
+            fitToTable()
+        }
+    }
+
+    fun onClose() {
+        listeners.remove(this::onChange)
     }
 }

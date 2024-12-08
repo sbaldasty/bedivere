@@ -11,6 +11,7 @@ repositories {
 }
 
 dependencies {
+    implementation("com.intellij:forms_rt:7.0.3")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
     testImplementation(kotlin("test"))
 }
