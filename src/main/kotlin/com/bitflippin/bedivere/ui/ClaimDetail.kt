@@ -1,6 +1,8 @@
 package com.bitflippin.bedivere.ui
 
 import com.bitflippin.bedivere.editor.EditorState
+import com.bitflippin.bedivere.editor.addCitation
+import com.bitflippin.bedivere.editor.setCitationSource
 import com.bitflippin.bedivere.form.ClaimForm
 import com.bitflippin.bedivere.model.Citation
 import com.bitflippin.bedivere.model.Claim
@@ -17,22 +19,18 @@ class ClaimDetail(
     private val form = ClaimForm()
     private val titleBinder = textFieldBinder(form.titleTextField, Claim::title)
     private val descriptionBinder = textFieldBinder(form.descriptionTextField, Claim::description)
-
-    // Stuff not ready yet
-    private val addCitationButton = AddCitationButton(editorState, model)
     private val citationsBinder = createCitationsBinder()
-//    private val citationTableWrapper = AutoResizeTable(citationTable, editorState.hub.citationListeners)
-    //private val setCitationSourceButton = SetCitationSourceButton(editorState) { citationTable.selection() }
 
     init {
-        add(form.contentPanel)
+        setViewportView(form.contentPanel)
+        form.setSourceButton.addActionListener { setCitationSource(editorState, citationsBinder.selection()) }
+        form.addCitationButton.addActionListener { addCitation(editorState, model) }
     }
 
     override fun onClose() {
         titleBinder.onClose()
         descriptionBinder.onClose()
         citationsBinder.onClose()
-        //citationTableWrapper.onClose()
     }
 
     private fun createCitationsBinder(): TableBinder<Citation> {
