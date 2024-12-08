@@ -13,6 +13,7 @@ It's just me developing right now. Here are things I've done and plan to do.
 
 ### Technical enhancements
 - [x] Improvise a double-click listener for lists
+- [ ] Use swing editor for main form
 - [ ] Fire change events from table cell edits
 - [ ] Add kotlin linter
 

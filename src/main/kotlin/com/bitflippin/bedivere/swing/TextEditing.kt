@@ -5,12 +5,17 @@ import com.bitflippin.bedivere.editor.ChangeListener
 import com.bitflippin.bedivere.editor.broadcastChange
 import java.awt.event.FocusAdapter
 import java.awt.event.FocusEvent
+import java.util.*
+import javax.swing.DefaultComboBoxModel
+import javax.swing.JComboBox
+import javax.swing.JComponent
 import javax.swing.JTextField
+import javax.swing.SwingUtilities
 import kotlin.reflect.KMutableProperty1
 
 typealias EditListener = (FocusEvent) -> Unit
 
-fun JTextField.addEditListener(listener: EditListener) {
+fun JComponent.addEditListener(listener: EditListener) {
     addFocusListener(FocusLostAdapter(listener))
 }
 
@@ -39,6 +44,35 @@ class TextFieldBinder<T>(
     fun onChange(model: T, change: Change) {
         if (t == model && change == Change.UPDATE && textField.text != property(model)) {
             textField.text = property(model)
+        }
+    }
+
+    fun onClose() {
+        listeners.remove(this::onChange)
+    }
+}
+
+class ComboBoxBinder<T, U>(
+    private val items: List<U>,
+    private val comboBox: JComboBox<U>,
+    private val t: T,
+    private val property: KMutableProperty1<T, U>,
+    private val listeners: MutableSet<ChangeListener<T>>
+) {
+    init {
+        comboBox.model = DefaultComboBoxModel(Vector(items))
+        SwingUtilities.invokeLater { onChange(t, Change.UPDATE) }
+        comboBox.addEditListener {
+            property.set(t, comboBox.model.getElementAt(comboBox.selectedIndex))
+            broadcastChange(listeners, t, Change.UPDATE)
+        }
+        listeners.add(this::onChange)
+    }
+
+    fun onChange(model: T, change: Change) {
+        val value = property(model)
+        if (t == model && change == Change.UPDATE && comboBox.model.selectedItem != value) {
+            comboBox.model.selectedItem = value
         }
     }
 
