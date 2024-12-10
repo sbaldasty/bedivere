@@ -29,7 +29,7 @@ public class SourceForm {
      */
     private void $$$setupUI$$$() {
         contentPanel = new JPanel();
-        contentPanel.setLayout(new GridLayoutManager(4, 2, new Insets(0, 0, 0, 0), -1, -1));
+        contentPanel.setLayout(new GridLayoutManager(4, 2, new Insets(8, 8, 8, 8), -1, -1));
         final JLabel label1 = new JLabel();
         label1.setText("Title:");
         contentPanel.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -55,4 +55,5 @@ public class SourceForm {
     public JComponent $$$getRootComponent$$$() {
         return contentPanel;
     }
+
 }

@@ -19,7 +19,7 @@ class SourceDetail(
     private val descriptionBinder = textFieldBinder(form.descriptionTextField, Source::description)
 
     init {
-        add(form.contentPanel)
+        setViewportView(form.contentPanel)
     }
 
     override fun onClose() {
