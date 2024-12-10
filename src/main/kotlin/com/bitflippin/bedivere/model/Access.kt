@@ -6,20 +6,20 @@ import java.io.File
 
 private fun <T> nextId(items: Collection<T>, f: (T) -> Int) = (items.maxOfOrNull(f) ?: 0) + 1
 
-fun loadModel(file: File)
-        = Json.decodeFromString<Argmap>(file.readText())
+fun loadModel(file: File) =
+    Json.decodeFromString<Argmap>(file.readText())
 
-fun saveModel(file: File, argmap: Argmap)
-        = file.writeText(Json.encodeToString(argmap))
+fun saveModel(file: File, argmap: Argmap) =
+    file.writeText(Json.encodeToString(argmap))
 
 fun Argmap.addCitation(): Citation {
-    val citation = Citation(CitationId(nextId(citations, { it.id.value })))
+    val citation = Citation(CitationId(nextId(citations) { it.id.value }))
     citations.add(citation)
     return citation
 }
 
 fun Argmap.addClaim(): Claim {
-    val claim = Claim(ClaimId(nextId(claims,{ it.id.value })))
+    val claim = Claim(ClaimId(nextId(claims) { it.id.value }))
     claims.add(claim)
     return claim
 }
@@ -37,7 +37,13 @@ fun Argmap.addSource(): Source {
 }
 
 fun Argmap.addSupport(): Support {
-    val support = Support(SupportId(nextId(supports, { it.id.value })))
+    val support = Support(SupportId(nextId(supports) { it.id.value }))
     supports.add(support)
     return support
 }
+
+fun Argmap.citations(claim: Claim): List<Citation> =
+    claim.citationIds.map { i -> citations.first { it.id == i } }
+
+fun Argmap.supports(claim: Claim): List<Support> =
+    claim.supportIds.map { i -> supports.first { it.id == i } }

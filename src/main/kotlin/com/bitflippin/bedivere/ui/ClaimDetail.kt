@@ -1,12 +1,9 @@
 package com.bitflippin.bedivere.ui
 
-import com.bitflippin.bedivere.editor.EditorState
-import com.bitflippin.bedivere.editor.addCitation
-import com.bitflippin.bedivere.editor.setCitationSource
+import com.bitflippin.bedivere.editor.*
 import com.bitflippin.bedivere.form.ClaimForm
-import com.bitflippin.bedivere.model.Citation
-import com.bitflippin.bedivere.model.Claim
-import com.bitflippin.bedivere.model.Confidence
+import com.bitflippin.bedivere.form.SupportForm
+import com.bitflippin.bedivere.model.*
 import com.bitflippin.bedivere.swing.*
 import javax.swing.*
 import javax.swing.table.DefaultTableCellRenderer
@@ -22,12 +19,32 @@ class ClaimDetail(
     private val descriptionBinder = textFieldBinder(form.descriptionTextField, Claim::description)
     private val confidenceBinder = comboBoxBinder(Confidence.entries.toList(), form.confidenceComboBox, Claim::confidence)
     private val citationsBinder = createCitationsBinder()
+    private val supportBinders = ArrayList<Pair<SupportBinder, SupportForm>>()
 
     init {
         setViewportView(form.contentPanel)
-        form.confidenceComboBox.model = DefaultComboBoxModel(Confidence.entries.toTypedArray())
+
         form.setSourceButton.addActionListener { setCitationSource(editorState, citationsBinder.selection()) }
         form.addCitationButton.addActionListener { addCitation(editorState, model) }
+        form.addSupportButton.addActionListener { addSupport(editorState, model) }
+
+        editorState.argmap.supports(model).forEach { addSupportPanel(it) }
+
+        editorState.hub.supportListeners.add(this::onSupportChange)
+    }
+
+    private fun addSupportPanel(support: Support) {
+        val supportForm = SupportForm()
+        form.supportsPanel.add(supportForm.contentPanel)
+        val binder = SupportBinder(supportForm, editorState, support)
+        supportBinders.add(Pair(binder, supportForm))
+    }
+
+    private fun onSupportChange(support: Support, change: Change) {
+        if (change == Change.ADD) {
+            addSupportPanel(support)
+        }
+        // TODO Handle other kinds of Support change
     }
 
     override fun onClose() {
@@ -35,6 +52,7 @@ class ClaimDetail(
         descriptionBinder.onClose()
         confidenceBinder.onClose()
         citationsBinder.onClose()
+        supportBinders.forEach { it.first.onClose() }
     }
 
     private fun createCitationsBinder(): TableBinder<Citation> {
@@ -63,7 +81,7 @@ class ClaimDetail(
             DefaultCellEditor(JCheckBox()))
 
         val columns = listOf(sourceColumn, descriptionColumn, enthymemeColumn)
-        return TableBinder(columns, model.citations, form.citationTable, editorState.hub.citationListeners)
+        return TableBinder(columns, editorState.argmap.citations(model), form.citationTable, editorState.hub.citationListeners)
     }
 
     private fun <U> comboBoxBinder(items: List<U>, comboBox: JComboBox<U>, property: KMutableProperty1<Claim, U>) =

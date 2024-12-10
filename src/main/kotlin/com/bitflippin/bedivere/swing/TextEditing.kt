@@ -61,7 +61,7 @@ class ComboBoxBinder<T, U>(
 ) {
     init {
         comboBox.model = DefaultComboBoxModel(Vector(items))
-        SwingUtilities.invokeLater { onChange(t, Change.UPDATE) }
+//        SwingUtilities.invokeLater { onChange(t, Change.UPDATE) }
         comboBox.addEditListener {
             property.set(t, comboBox.model.getElementAt(comboBox.selectedIndex))
             broadcastChange(listeners, t, Change.UPDATE)

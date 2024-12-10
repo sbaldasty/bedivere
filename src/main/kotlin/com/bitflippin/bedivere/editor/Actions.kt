@@ -4,7 +4,7 @@ import com.bitflippin.bedivere.model.*
 
 fun addCitation(editorState: EditorState, claim: Claim) {
     val result = editorState.argmap.addCitation()
-    claim.citations.add(result)
+    claim.citationIds.add(result.id)
     broadcastChange(editorState.hub.citationListeners, result, Change.ADD)
 }
 
@@ -17,6 +17,13 @@ fun addClaim(editorState: EditorState): Claim {
 fun addSource(editorState: EditorState): Source {
     val result = editorState.argmap.addSource()
     broadcastChange(editorState.hub.sourceListeners, result, Change.ADD)
+    return result
+}
+
+fun addSupport(editorState: EditorState, claim: Claim): Support {
+    val result = editorState.argmap.addSupport()
+    claim.supportIds.add(result.id)
+    broadcastChange(editorState.hub.supportListeners, result, Change.ADD)
     return result
 }
 

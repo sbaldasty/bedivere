@@ -45,7 +45,7 @@ data class Claim(
     var title: String = "",
     var description: String = "",
     var confidence: Confidence = Confidence.UNEXAMINED,
-    var citations: MutableList<Citation> = ArrayList(),
+    var citationIds: MutableList<CitationId> = ArrayList(),
     var supportIds: MutableList<SupportId> = ArrayList(),
     var counterSupportIds: MutableList<SupportId> = ArrayList(),
     var neighbors: MutableList<ClaimId> = ArrayList()
