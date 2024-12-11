@@ -20,7 +20,7 @@ class SupportBinder(
     private val strengthBinder = comboBoxBinder(Strength.entries.toList(), component.strengthComboBox, Support::strength)
 
     fun onClose() {
-        descriptionBinder.onClose()
+        descriptionBinder.release()
         strengthBinder.onClose()
     }
 
@@ -28,5 +28,5 @@ class SupportBinder(
         ComboBoxBinder(items, comboBox, model, property, editorState.hub.supportListeners)
 
     private fun textFieldBinder(textField: JTextField, property: KMutableProperty1<Support, String>) =
-        TextFieldBinder(textField, model, property, editorState.hub.supportListeners)
+        TextFieldBinder(textField, model, editorState.hub.supportListeners, property)
 }

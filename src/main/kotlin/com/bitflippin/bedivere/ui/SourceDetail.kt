@@ -23,11 +23,11 @@ class SourceDetail(
     }
 
     override fun onClose() {
-        titleBinder.onClose()
-        urlBinder.onClose()
-        descriptionBinder.onClose()
+        titleBinder.release()
+        urlBinder.release()
+        descriptionBinder.release()
     }
 
     private fun textFieldBinder(textField: JTextField, property: KMutableProperty1<Source, String>) =
-        TextFieldBinder(textField, model, property, editorState.hub.sourceListeners)
+        TextFieldBinder(textField, model, editorState.hub.sourceListeners, property)
 }
