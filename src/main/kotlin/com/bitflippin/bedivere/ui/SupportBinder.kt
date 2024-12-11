@@ -1,11 +1,11 @@
 package com.bitflippin.bedivere.ui
 
+import com.bitflippin.bedivere.bind.ComboBoxBinder
+import com.bitflippin.bedivere.bind.TextFieldBinder
 import com.bitflippin.bedivere.editor.EditorState
 import com.bitflippin.bedivere.form.SupportForm
 import com.bitflippin.bedivere.model.Strength
 import com.bitflippin.bedivere.model.Support
-import com.bitflippin.bedivere.swing.ComboBoxBinder
-import com.bitflippin.bedivere.swing.TextFieldBinder
 import javax.swing.JComboBox
 import javax.swing.JTextField
 import kotlin.reflect.KMutableProperty1

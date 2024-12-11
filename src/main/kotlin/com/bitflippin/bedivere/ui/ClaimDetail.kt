@@ -1,5 +1,7 @@
 package com.bitflippin.bedivere.ui
 
+import com.bitflippin.bedivere.bind.ComboBoxBinder
+import com.bitflippin.bedivere.bind.TextFieldBinder
 import com.bitflippin.bedivere.editor.*
 import com.bitflippin.bedivere.form.ClaimForm
 import com.bitflippin.bedivere.form.SupportForm
