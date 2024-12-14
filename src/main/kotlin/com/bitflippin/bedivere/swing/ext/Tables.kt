@@ -3,16 +3,14 @@ package com.bitflippin.bedivere.swing.ext
 import com.bitflippin.bedivere.editor.Change
 import com.bitflippin.bedivere.editor.ChangeListener
 import java.awt.Component
-import java.awt.Dimension
-import java.awt.event.ComponentListener
 import javax.swing.JCheckBox
-import javax.swing.JScrollPane
 import javax.swing.JTable
 import javax.swing.table.AbstractTableModel
 import javax.swing.table.TableCellEditor
 import javax.swing.table.TableCellRenderer
 import kotlin.reflect.KMutableProperty1
 
+// TODO A lot of this stuff belongs in com.bitflippin.bedivere.swing.bind
 class ModularColumn<T>(
     val name: String,
     val width: Int,
