@@ -12,24 +12,19 @@ class TextFieldBinder<M>(
     model: M,
     listeners: MutableSet<ChangeListener<M>>,
     private val property: KMutableProperty1<M, String>
-) : Binder<JTextField, M>(ui, model, listeners) {
+) : AbstractSingleBinder<JTextField, M>(ui, model, listeners) {
 
     init {
-        onChange(model, Change.UPDATE)
+        onModelUpdate(model)
         ui.addEditListener {
             property.set(model, ui.text)
             broadcastChange(listeners, model, Change.UPDATE)
         }
-        listeners.add(this::onChange)
     }
 
-    fun onChange(target: M, change: Change) {
-        if (model == target && change == Change.UPDATE && ui.text != property(model)) {
+    override fun onModelUpdate(target: M) {
+        if (model == target && ui.text != property(model)) {
             ui.text = property(model)
         }
-    }
-
-    override fun release() {
-        listeners.remove(this::onChange)
     }
 }
