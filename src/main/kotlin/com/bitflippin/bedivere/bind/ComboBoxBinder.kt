@@ -10,31 +10,27 @@ import javax.swing.JComboBox
 import javax.swing.SwingUtilities
 import kotlin.reflect.KMutableProperty1
 
-class ComboBoxBinder<T, U>(
-    items: List<U>,
-    private val comboBox: JComboBox<U>,
-    private val t: T,
-    private val property: KMutableProperty1<T, U>,
-    private val listeners: MutableSet<ChangeListener<T>>
-) {
+class ComboBoxBinder<M, P>(
+    ui: JComboBox<P>,
+    model: M,
+    listeners: MutableSet<ChangeListener<M>>,
+    private val property: KMutableProperty1<M, P>,
+    items: List<P>
+) : AbstractSingleBinder<JComboBox<P>, M>(ui, model, listeners) {
+
     init {
-        comboBox.model = DefaultComboBoxModel(Vector(items))
-        SwingUtilities.invokeLater { onChange(t, Change.UPDATE) }
-        comboBox.addEditListener {
-            property.set(t, comboBox.model.getElementAt(comboBox.selectedIndex))
-            broadcastChange(listeners, t, Change.UPDATE)
+        ui.model = DefaultComboBoxModel(Vector(items))
+        SwingUtilities.invokeLater { onModelUpdate(model) }
+        ui.addEditListener {
+            property.set(model, ui.model.getElementAt(ui.selectedIndex))
+            broadcastChange(listeners, model, Change.UPDATE)
         }
-        listeners.add(this::onChange)
     }
 
-    fun onChange(model: T, change: Change) {
+    override fun onModelUpdate(target: M) {
         val value = property(model)
-        if (t == model && change == Change.UPDATE && comboBox.model.selectedItem != value) {
-            comboBox.model.selectedItem = value
+        if (model == target && ui.model.selectedItem != value) {
+            ui.model.selectedItem = value
         }
-    }
-
-    fun onClose() {
-        listeners.remove(this::onChange)
     }
 }

@@ -21,11 +21,11 @@ class SupportBinder(
 
     fun onClose() {
         descriptionBinder.release()
-        strengthBinder.onClose()
+        strengthBinder.release()
     }
 
     private fun <U> comboBoxBinder(items: List<U>, comboBox: JComboBox<U>, property: KMutableProperty1<Support, U>) =
-        ComboBoxBinder(items, comboBox, model, property, editorState.hub.supportListeners)
+        ComboBoxBinder(comboBox, model, editorState.hub.supportListeners, property, items)
 
     private fun textFieldBinder(textField: JTextField, property: KMutableProperty1<Support, String>) =
         TextFieldBinder(textField, model, editorState.hub.supportListeners, property)

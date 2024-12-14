@@ -52,7 +52,7 @@ class ClaimDetail(
     override fun onClose() {
         titleBinder.release()
         descriptionBinder.release()
-        confidenceBinder.onClose()
+        confidenceBinder.release()
         citationsBinder.onClose()
         supportBinders.forEach { it.first.onClose() }
     }
@@ -87,7 +87,7 @@ class ClaimDetail(
     }
 
     private fun <U> comboBoxBinder(items: List<U>, comboBox: JComboBox<U>, property: KMutableProperty1<Claim, U>) =
-        ComboBoxBinder(items, comboBox, model, property, editorState.hub.claimListeners)
+        ComboBoxBinder(comboBox, model, editorState.hub.claimListeners, property, items)
 
     private fun textFieldBinder(textField: JTextField, property: KMutableProperty1<Claim, String>) =
         TextFieldBinder(textField, model, editorState.hub.claimListeners, property)
