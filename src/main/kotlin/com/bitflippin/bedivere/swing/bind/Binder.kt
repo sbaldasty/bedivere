@@ -1,4 +1,4 @@
-package com.bitflippin.bedivere.bind
+package com.bitflippin.bedivere.swing.bind
 
 interface Binder<U, M> {
     val ui: U

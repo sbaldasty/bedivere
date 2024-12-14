@@ -1,4 +1,4 @@
-package com.bitflippin.bedivere.swing
+package com.bitflippin.bedivere.swing.ext
 
 import com.bitflippin.bedivere.editor.Change
 import com.bitflippin.bedivere.editor.ChangeListener

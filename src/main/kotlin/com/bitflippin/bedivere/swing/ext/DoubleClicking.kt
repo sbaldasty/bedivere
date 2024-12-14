@@ -1,4 +1,4 @@
-package com.bitflippin.bedivere.swing
+package com.bitflippin.bedivere.swing.ext
 
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent

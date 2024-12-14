@@ -4,7 +4,7 @@ import com.bitflippin.bedivere.editor.Change
 import com.bitflippin.bedivere.editor.EditorState
 import com.bitflippin.bedivere.model.Source
 import com.bitflippin.bedivere.model.SourceId
-import com.bitflippin.bedivere.swing.addDoubleClickListener
+import com.bitflippin.bedivere.swing.ext.addDoubleClickListener
 import javax.swing.DefaultListModel
 import javax.swing.JList
 

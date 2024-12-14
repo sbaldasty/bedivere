@@ -1,4 +1,4 @@
-package com.bitflippin.bedivere.bind
+package com.bitflippin.bedivere.swing.bind
 
 import javax.swing.JList
 

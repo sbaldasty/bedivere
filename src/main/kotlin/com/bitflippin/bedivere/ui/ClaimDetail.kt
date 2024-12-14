@@ -1,12 +1,16 @@
 package com.bitflippin.bedivere.ui
 
-import com.bitflippin.bedivere.bind.ComboBoxBinder
-import com.bitflippin.bedivere.bind.TextFieldBinder
+import com.bitflippin.bedivere.swing.bind.ComboBoxBinder
+import com.bitflippin.bedivere.swing.bind.TextFieldBinder
 import com.bitflippin.bedivere.editor.*
 import com.bitflippin.bedivere.form.ClaimForm
 import com.bitflippin.bedivere.form.SupportForm
 import com.bitflippin.bedivere.model.*
 import com.bitflippin.bedivere.swing.*
+import com.bitflippin.bedivere.swing.ext.CheckBoxRenderer
+import com.bitflippin.bedivere.swing.ext.ModularColumn
+import com.bitflippin.bedivere.swing.ext.TabbedPanel
+import com.bitflippin.bedivere.swing.ext.TableBinder
 import javax.swing.*
 import javax.swing.table.DefaultTableCellRenderer
 import kotlin.reflect.KMutableProperty1

@@ -1,9 +1,9 @@
-package com.bitflippin.bedivere.bind
+package com.bitflippin.bedivere.swing.bind
 
 import com.bitflippin.bedivere.editor.Change
 import com.bitflippin.bedivere.editor.ChangeListener
 import com.bitflippin.bedivere.editor.broadcastChange
-import com.bitflippin.bedivere.swing.addEditListener
+import com.bitflippin.bedivere.swing.ext.addEditListener
 import javax.swing.JTextField
 import kotlin.reflect.KMutableProperty1
 

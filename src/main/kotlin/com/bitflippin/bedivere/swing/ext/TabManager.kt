@@ -1,4 +1,4 @@
-package com.bitflippin.bedivere.swing
+package com.bitflippin.bedivere.swing.ext
 
 import java.awt.BorderLayout
 import javax.swing.JPanel

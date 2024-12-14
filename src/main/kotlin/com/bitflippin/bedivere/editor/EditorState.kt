@@ -2,7 +2,7 @@ package com.bitflippin.bedivere.editor
 
 import com.bitflippin.bedivere.model.Argmap
 import com.bitflippin.bedivere.model.SourceId
-import com.bitflippin.bedivere.swing.TabManager
+import com.bitflippin.bedivere.swing.ext.TabManager
 import java.io.File
 
 class EditorState(

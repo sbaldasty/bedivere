@@ -1,10 +1,10 @@
 package com.bitflippin.bedivere.ui
 
-import com.bitflippin.bedivere.bind.TextFieldBinder
+import com.bitflippin.bedivere.swing.bind.TextFieldBinder
 import com.bitflippin.bedivere.editor.EditorState
 import com.bitflippin.bedivere.form.SourceForm
 import com.bitflippin.bedivere.model.Source
-import com.bitflippin.bedivere.swing.TabbedPanel
+import com.bitflippin.bedivere.swing.ext.TabbedPanel
 import javax.swing.JTextField
 import kotlin.reflect.KMutableProperty1
 
