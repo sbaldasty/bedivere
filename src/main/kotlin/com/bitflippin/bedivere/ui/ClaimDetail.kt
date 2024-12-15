@@ -1,9 +1,20 @@
 package com.bitflippin.bedivere.ui
 
-import com.bitflippin.bedivere.editor.*
+import com.bitflippin.bedivere.editor.Change
+import com.bitflippin.bedivere.editor.EditorState
+import com.bitflippin.bedivere.editor.addCitation
+import com.bitflippin.bedivere.editor.addSupport
+import com.bitflippin.bedivere.editor.setCitationSource
 import com.bitflippin.bedivere.form.ClaimForm
 import com.bitflippin.bedivere.form.SupportForm
-import com.bitflippin.bedivere.model.*
+import com.bitflippin.bedivere.model.Citation
+import com.bitflippin.bedivere.model.Claim
+import com.bitflippin.bedivere.model.Confidence
+import com.bitflippin.bedivere.model.SourceId
+import com.bitflippin.bedivere.model.Support
+import com.bitflippin.bedivere.model.citations
+import com.bitflippin.bedivere.model.lookup
+import com.bitflippin.bedivere.model.supports
 import com.bitflippin.bedivere.swing.bind.Binder
 import com.bitflippin.bedivere.swing.bind.ComboBoxBinder
 import com.bitflippin.bedivere.swing.bind.TextFieldBinder
@@ -11,7 +22,11 @@ import com.bitflippin.bedivere.swing.ext.CheckBoxRenderer
 import com.bitflippin.bedivere.swing.ext.ModularColumn
 import com.bitflippin.bedivere.swing.ext.PropertyTableCellRenderer
 import com.bitflippin.bedivere.swing.ext.TableBinder
-import javax.swing.*
+import javax.swing.DefaultCellEditor
+import javax.swing.JCheckBox
+import javax.swing.JComboBox
+import javax.swing.JPanel
+import javax.swing.JTextField
 import javax.swing.table.DefaultTableCellRenderer
 import kotlin.reflect.KMutableProperty1
 

@@ -4,7 +4,7 @@ import com.bitflippin.bedivere.editor.Change
 import com.bitflippin.bedivere.editor.ChangeListener
 import com.bitflippin.bedivere.editor.broadcastChange
 import com.bitflippin.bedivere.swing.ext.addEditListener
-import java.util.*
+import java.util.Vector
 import javax.swing.DefaultComboBoxModel
 import javax.swing.JComboBox
 import javax.swing.SwingUtilities

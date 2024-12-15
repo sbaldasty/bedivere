@@ -1,8 +1,18 @@
 package com.bitflippin.bedivere.editor
 
-import com.bitflippin.bedivere.model.*
+import com.bitflippin.bedivere.model.Citation
+import com.bitflippin.bedivere.model.Claim
+import com.bitflippin.bedivere.model.Source
+import com.bitflippin.bedivere.model.Support
+import com.bitflippin.bedivere.model.addCitation
+import com.bitflippin.bedivere.model.addClaim
+import com.bitflippin.bedivere.model.addSource
+import com.bitflippin.bedivere.model.addSupport
 
-fun addCitation(editorState: EditorState, claim: Claim) {
+fun addCitation(
+    editorState: EditorState,
+    claim: Claim,
+) {
     val result = editorState.argmap.addCitation()
     claim.citationIds.add(result.id)
     broadcastChange(editorState.hub.citationListeners, result, Change.ADD)
@@ -20,14 +30,20 @@ fun addSource(editorState: EditorState): Source {
     return result
 }
 
-fun addSupport(editorState: EditorState, claim: Claim): Support {
+fun addSupport(
+    editorState: EditorState,
+    claim: Claim,
+): Support {
     val result = editorState.argmap.addSupport()
     claim.supportIds.add(result.id)
     broadcastChange(editorState.hub.supportListeners, result, Change.ADD)
     return result
 }
 
-fun setCitationSource(editorState: EditorState, citation: Citation) {
+fun setCitationSource(
+    editorState: EditorState,
+    citation: Citation,
+) {
     citation.sourceId = editorState.selectedSourceId
     broadcastChange(editorState.hub.citationListeners, citation, Change.UPDATE)
 }

@@ -1,6 +1,10 @@
 package com.bitflippin.bedivere.editor
 
-import com.bitflippin.bedivere.model.*
+import com.bitflippin.bedivere.model.Citation
+import com.bitflippin.bedivere.model.Claim
+import com.bitflippin.bedivere.model.Ideology
+import com.bitflippin.bedivere.model.Source
+import com.bitflippin.bedivere.model.Support
 
 enum class Change { ADD, REMOVE, UPDATE }
 
