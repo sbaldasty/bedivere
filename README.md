@@ -17,7 +17,7 @@ It's just me developing right now. Here are things I've done and plan to do.
 - [x] Make left pane horizontally scrollable
 - [x] Add claim list and editor
 - [x] Set source for citations
-- [ ] Proper label in sources list
+- [x] Proper label in sources list
 - [ ] Source label in claim citations list
 - [ ] Make tabbed editors closable
 - [ ] Titles for tabbed editors
@@ -27,9 +27,9 @@ It's just me developing right now. Here are things I've done and plan to do.
 
 ### Technical enhancements
 - [x] Improvise a double-click listener for lists
-- [ ] Make cell renderer abstraction from `CustomRenderer`
-- [ ] Abstract the idea of a `Binder` for better reuse
-- [ ] Use swing editor for main form
+- [x] Make cell renderer abstraction from `CustomRenderer`
+- [x] Abstract the idea of a `Binder` for better reuse
+- [x] Use swing editor for main form
 - [ ] Fire change events from table cell edits
 - [ ] Forms belong in a Java source root
 - [ ] Add kotlin linter
