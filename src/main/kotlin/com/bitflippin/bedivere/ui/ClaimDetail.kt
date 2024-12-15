@@ -6,7 +6,6 @@ import com.bitflippin.bedivere.editor.*
 import com.bitflippin.bedivere.form.ClaimForm
 import com.bitflippin.bedivere.form.SupportForm
 import com.bitflippin.bedivere.model.*
-import com.bitflippin.bedivere.swing.*
 import com.bitflippin.bedivere.swing.bind.Binder
 import com.bitflippin.bedivere.swing.ext.CheckBoxRenderer
 import com.bitflippin.bedivere.swing.ext.ModularColumn

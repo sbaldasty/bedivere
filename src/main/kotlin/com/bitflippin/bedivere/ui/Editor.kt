@@ -1,19 +1,17 @@
 package com.bitflippin.bedivere.ui
 
-import com.bitflippin.bedivere.editor.ChangeListener
 import com.bitflippin.bedivere.editor.EditorState
 import com.bitflippin.bedivere.editor.addClaim
 import com.bitflippin.bedivere.editor.addSource
 import com.bitflippin.bedivere.form.ClaimForm
 import com.bitflippin.bedivere.form.MainForm
 import com.bitflippin.bedivere.form.SourceForm
-import com.bitflippin.bedivere.model.Claim
+import com.bitflippin.bedivere.model.SourceId
 import com.bitflippin.bedivere.model.saveModel
 import com.bitflippin.bedivere.swing.bind.Binder
 import com.bitflippin.bedivere.swing.bind.ListBinder
 import com.bitflippin.bedivere.swing.ext.addDoubleClickListener
 import com.bitflippin.bedivere.swing.ext.setCellRenderer
-import javax.swing.JComponent
 import javax.swing.JPanel
 
 class Editor(
@@ -30,8 +28,13 @@ class Editor(
         ui.addSourceButton.addActionListener { addSource(model) }
         ui.claimsList.addDoubleClickListener { model.detailTabs.open(ClaimDetail(ClaimForm(), it, model)) }
         ui.claimsList.setCellRenderer { x -> x.title }
-//        ui.sourcesList.addDoubleClickListener { model.detailTabs.open(SourceDetail(SourceForm(), it, model)) }
+        ui.sourcesList.addDoubleClickListener { model.detailTabs.open(SourceDetail(SourceForm(), it, model)) }
         ui.sourcesList.setCellRenderer { x -> x.title }
+        ui.sourcesList.addListSelectionListener {
+            if (!it.valueIsAdjusting) {
+                model.selectedSourceId = ui.sourcesList.selectedValue?.id ?: SourceId(0)
+            }
+        }
     }
 
     override fun component(): JPanel = ui.contentPanel
