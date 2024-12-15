@@ -22,6 +22,7 @@ import com.bitflippin.bedivere.swing.ext.CheckBoxRenderer
 import com.bitflippin.bedivere.swing.ext.ModularColumn
 import com.bitflippin.bedivere.swing.ext.PropertyTableCellRenderer
 import com.bitflippin.bedivere.swing.ext.TableBinder
+import com.bitflippin.bedivere.swing.ext.enableAutoResize
 import javax.swing.DefaultCellEditor
 import javax.swing.JCheckBox
 import javax.swing.JComboBox
@@ -45,6 +46,7 @@ class ClaimDetail(
         ui.setSourceButton.addActionListener { setCitationSource(editorState, citationsBinder.selection()) }
         ui.addCitationButton.addActionListener { addCitation(editorState, model) }
         ui.addSupportButton.addActionListener { addSupport(editorState, model) }
+        ui.citationTable.enableAutoResize()
 
         editorState.argmap.supports(model).forEach { addSupportPanel(it) }
 
@@ -83,7 +85,7 @@ class ClaimDetail(
                 32,
                 { false },
                 Citation::sourceId,
-                PropertyTableCellRenderer { x: SourceId -> editorState.argmap.lookup(x).title },
+                PropertyTableCellRenderer { x: SourceId -> if (x.value == 0) "(none)" else editorState.argmap.lookup(x).title },
                 DefaultCellEditor(JTextField()),
             )
 

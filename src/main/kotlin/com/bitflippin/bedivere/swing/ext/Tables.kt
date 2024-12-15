@@ -3,6 +3,7 @@ package com.bitflippin.bedivere.swing.ext
 import com.bitflippin.bedivere.editor.Change
 import com.bitflippin.bedivere.editor.ChangeListener
 import java.awt.Component
+import java.awt.Dimension
 import javax.swing.JCheckBox
 import javax.swing.JLabel
 import javax.swing.JTable
@@ -141,28 +142,15 @@ class PropertyTableCellRenderer<T>(
     }
 }
 
-//
-// class AutoResizeTable<T>(
-//    private val table: TableBinder<T>,
-//    private val listeners: MutableSet<ChangeListener<T>>
-// ) : JScrollPane(table) {
-//    init {
-//        verticalScrollBarPolicy = VERTICAL_SCROLLBAR_NEVER
-//        horizontalScrollBarPolicy = HORIZONTAL_SCROLLBAR_AS_NEEDED
-//        listeners.add(this::onChange)
-//    }
-//
-//    private fun fitToTable() {
-//        preferredSize = Dimension(preferredSize.width, table.rowHeight * table.rowCount)
-//    }
-//
-//    fun onChange(t: T, change: Change) {
-//        if (change == Change.ADD || change == Change.REMOVE) {
-//            fitToTable()
-//        }
-//    }
-//
-//    fun onClose() {
-//        listeners.remove(this::onChange)
-//    }
-// }
+fun JTable.enableAutoResize() {
+    fun bestFit() = Dimension(size.width, rowHeight * rowCount)
+    preferredScrollableViewportSize = bestFit()
+    model.addTableModelListener {
+        preferredScrollableViewportSize = bestFit()
+        val scrollPane = parent.parent
+        scrollPane.revalidate()
+        val panel = scrollPane.parent
+        panel.revalidate()
+        panel.repaint()
+    }
+}

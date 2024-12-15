@@ -5,9 +5,10 @@ It's just me developing right now. Here are things I've done and plan to do.
 
 ### Aesthetics
 - [x] Claim detail form should have section headers
-- [ ] Height of claim citations table should vary with contents
+- [x] Height of claim citations table should vary with contents
 - [ ] What is wrong with table column widths?
 - [ ] Claim supports should stack vertically
+- [ ] Claim detail should not fill vertical space unless it needs to
 
 ### Bugs
 - [ ] Fix concurrent change listener list modifications
