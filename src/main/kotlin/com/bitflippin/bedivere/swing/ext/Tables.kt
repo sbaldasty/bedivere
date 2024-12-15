@@ -4,8 +4,10 @@ import com.bitflippin.bedivere.editor.Change
 import com.bitflippin.bedivere.editor.ChangeListener
 import java.awt.Component
 import javax.swing.JCheckBox
+import javax.swing.JLabel
 import javax.swing.JTable
 import javax.swing.table.AbstractTableModel
+import javax.swing.table.DefaultTableCellRenderer
 import javax.swing.table.TableCellEditor
 import javax.swing.table.TableCellRenderer
 import kotlin.reflect.KMutableProperty1
@@ -97,6 +99,26 @@ internal class CheckBoxRenderer : JCheckBox(), TableCellRenderer {
         return this
     }
 }
+
+class PropertyTableCellRenderer<T>(
+    private val textProvider: (T) -> String
+) : DefaultTableCellRenderer() {
+
+    override fun getTableCellRendererComponent(
+        table: JTable,
+        value: Any,
+        isSelected: Boolean,
+        hasFocus: Boolean,
+        row: Int,
+        column: Int
+    ): Component {
+        val label = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column) as JLabel
+        @Suppress("UNCHECKED_CAST")
+        label.text = textProvider(value as T)
+        return label
+    }
+}
+
 //
 //class AutoResizeTable<T>(
 //    private val table: TableBinder<T>,

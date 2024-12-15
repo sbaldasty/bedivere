@@ -18,7 +18,7 @@ It's just me developing right now. Here are things I've done and plan to do.
 - [x] Add claim list and editor
 - [x] Set source for citations
 - [x] Proper label in sources list
-- [ ] Source label in claim citations list
+- [x] Source label in claim citations list
 - [ ] Make tabbed editors closable
 - [ ] Titles for tabbed editors
 - [ ] Should be possible to remove citations from claims

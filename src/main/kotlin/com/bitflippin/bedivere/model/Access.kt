@@ -42,8 +42,12 @@ fun Argmap.addSupport(): Support {
     return support
 }
 
+fun Argmap.lookup(id: CitationId): Citation = citations.first { it.id == id }
+fun Argmap.lookup(id: SourceId): Source = sources.first { it.id == id }
+fun Argmap.lookup(id: SupportId): Support = supports.first { it.id == id }
+
 fun Argmap.citations(claim: Claim): List<Citation> =
-    claim.citationIds.map { i -> citations.first { it.id == i } }
+    claim.citationIds.map { i -> lookup(i) }
 
 fun Argmap.supports(claim: Claim): List<Support> =
-    claim.supportIds.map { i -> supports.first { it.id == i } }
+    claim.supportIds.map { i -> lookup(i) }

@@ -9,6 +9,7 @@ import com.bitflippin.bedivere.model.*
 import com.bitflippin.bedivere.swing.bind.Binder
 import com.bitflippin.bedivere.swing.ext.CheckBoxRenderer
 import com.bitflippin.bedivere.swing.ext.ModularColumn
+import com.bitflippin.bedivere.swing.ext.PropertyTableCellRenderer
 import com.bitflippin.bedivere.swing.ext.TableBinder
 import javax.swing.*
 import javax.swing.table.DefaultTableCellRenderer
@@ -64,7 +65,7 @@ class ClaimDetail(
             32,
             { false },
             Citation::sourceId,
-            DefaultTableCellRenderer(),
+            PropertyTableCellRenderer {x: SourceId -> editorState.argmap.lookup(x).title },
             DefaultCellEditor(JTextField()))
 
         val descriptionColumn = ModularColumn(
