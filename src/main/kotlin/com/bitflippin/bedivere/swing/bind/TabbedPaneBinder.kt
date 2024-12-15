@@ -16,12 +16,12 @@ class TabbedPaneBinder(
         model.forEach { it.release() }
     }
 
-    fun open(detail: Binder<*, *>) {
+    fun open(tabText: String, detail: Binder<*, *>) {
         val content = JPanel()
         content.layout = BorderLayout()
         val scrollPane = JScrollPane(detail.component())
         content.add(scrollPane, BorderLayout.CENTER)
-        ui.add("asdf", content)
+        ui.add(tabText, content)
     }
 
 }

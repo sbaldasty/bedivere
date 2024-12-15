@@ -26,9 +26,9 @@ class Editor(
         ui.saveButton.addActionListener { saveModel(model.file, model.argmap) }
         ui.addClaimButton.addActionListener { addClaim(model) }
         ui.addSourceButton.addActionListener { addSource(model) }
-        ui.claimsList.addDoubleClickListener { model.detailTabs.open(ClaimDetail(ClaimForm(), it, model)) }
+        ui.claimsList.addDoubleClickListener { model.detailTabs.open("Claim ${it.id.value}", ClaimDetail(ClaimForm(), it, model)) }
         ui.claimsList.setCellRenderer { x -> x.title }
-        ui.sourcesList.addDoubleClickListener { model.detailTabs.open(SourceDetail(SourceForm(), it, model)) }
+        ui.sourcesList.addDoubleClickListener { model.detailTabs.open("Source ${it.id.value}", SourceDetail(SourceForm(), it, model)) }
         ui.sourcesList.setCellRenderer { x -> x.title }
         ui.sourcesList.addListSelectionListener {
             if (!it.valueIsAdjusting) {
