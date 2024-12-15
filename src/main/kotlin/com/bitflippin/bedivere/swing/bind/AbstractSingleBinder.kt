@@ -24,6 +24,8 @@ abstract class AbstractSingleBinder<U : JComponent, M, E>(
     open fun onModelRemove(target: E) { /* Empty */ }
     open fun onModelUpdate(target: E) { /* Empty */ }
 
+    override fun component() = ui
+
     override fun release() {
         listeners.remove(listener)
     }
