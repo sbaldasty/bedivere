@@ -11,9 +11,8 @@ class TextFieldBinder<M>(
     ui: JTextField,
     model: M,
     listeners: MutableSet<ChangeListener<M>>,
-    private val property: KMutableProperty1<M, String>
+    private val property: KMutableProperty1<M, String>,
 ) : AbstractSingleBinder<JTextField, M, M>(ui, model, listeners) {
-
     init {
         onModelUpdate(model)
         ui.addEditListener {

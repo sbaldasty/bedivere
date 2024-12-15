@@ -16,9 +16,8 @@ import javax.swing.JPanel
 
 class Editor(
     override val ui: MainForm,
-    override val model: EditorState
+    override val model: EditorState,
 ) : Binder<MainForm, EditorState> {
-
     private val claimsList = ListBinder(ui.claimsList, model.argmap.claims, model.hub.claimListeners)
     private val sourcesList = ListBinder(ui.sourcesList, model.argmap.sources, model.hub.sourceListeners)
 

@@ -10,5 +10,5 @@ class EditorState(
     var file: File,
     var hub: Hub,
     var detailTabs: TabbedPaneBinder,
-    var selectedSourceId: SourceId = SourceId(0)
+    var selectedSourceId: SourceId = SourceId(0),
 )

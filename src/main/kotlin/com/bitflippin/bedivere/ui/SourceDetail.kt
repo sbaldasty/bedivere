@@ -14,7 +14,6 @@ class SourceDetail(
     override val model: Source,
     private val editorState: EditorState,
 ) : Binder<SourceForm, Source> {
-
     private val titleBinder = textFieldBinder(ui.titleTextField, Source::title)
     private val urlBinder = textFieldBinder(ui.urlTextField, Source::url)
     private val descriptionBinder = textFieldBinder(ui.descriptionTextField, Source::description)
@@ -27,6 +26,8 @@ class SourceDetail(
 
     override fun component(): JPanel = ui.contentPanel
 
-    private fun textFieldBinder(textField: JTextField, property: KMutableProperty1<Source, String>) =
-        TextFieldBinder(textField, model, editorState.hub.sourceListeners, property)
+    private fun textFieldBinder(
+        textField: JTextField,
+        property: KMutableProperty1<Source, String>,
+    ) = TextFieldBinder(textField, model, editorState.hub.sourceListeners, property)
 }

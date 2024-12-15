@@ -20,7 +20,7 @@ fun main() {
         val form = MainForm()
         val argmap = loadModel(devfile)
         val state = EditorState(argmap, devfile, Hub(), TabbedPaneBinder(form.detailsTabbedPane))
-        //val frame = MainFrame(state)
+        // val frame = MainFrame(state)
         val frame = Fr()
         val editor = Editor(form, state)
         frame.add(form.contentPanel)
@@ -29,7 +29,6 @@ fun main() {
 }
 
 class Fr : JFrame() {
-
     init {
         title = "Bedivere Argument Mapper"
         defaultCloseOperation = EXIT_ON_CLOSE

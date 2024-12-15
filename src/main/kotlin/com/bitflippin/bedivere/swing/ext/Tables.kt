@@ -19,20 +19,34 @@ class ModularColumn<T>(
     val editable: (T) -> Boolean,
     val property: KMutableProperty1<T, *>,
     val cellRenderer: TableCellRenderer,
-    val cellEditor: TableCellEditor
+    val cellEditor: TableCellEditor,
 )
 
 class ColumnDrivenTableModel<T>(
     private val columns: List<ModularColumn<T>>,
-    private val rows: List<T>
+    private val rows: List<T>,
 ) : AbstractTableModel() {
-
     override fun getColumnName(column: Int) = columns[column].name
+
     override fun getRowCount() = rows.size
+
     override fun getColumnCount() = columns.size
-    override fun getValueAt(row: Int, column: Int) = columns[column].property(rows[row])
-    override fun setValueAt(value: Any, row: Int, column: Int) = castProperty(columns[column]).set(rows[row], value)
-    override fun isCellEditable(row: Int, column: Int) = columns[column].editable(rows[row])
+
+    override fun getValueAt(
+        row: Int,
+        column: Int,
+    ) = columns[column].property(rows[row])
+
+    override fun setValueAt(
+        value: Any,
+        row: Int,
+        column: Int,
+    ) = castProperty(columns[column]).set(rows[row], value)
+
+    override fun isCellEditable(
+        row: Int,
+        column: Int,
+    ) = columns[column].editable(rows[row])
 
     @Suppress("UNCHECKED_CAST")
     private fun castProperty(column: ModularColumn<T>) = column.property as KMutableProperty1<T, Any>
@@ -42,9 +56,8 @@ class TableBinder<T>(
     columns: List<ModularColumn<T>>,
     rows: List<T>,
     private val table: JTable,
-    private val listeners: MutableSet<ChangeListener<T>>
+    private val listeners: MutableSet<ChangeListener<T>>,
 ) {
-
     private val copiedRows = rows.toMutableList()
     private val columnDrivenTableModel = ColumnDrivenTableModel(columns, copiedRows)
 
@@ -61,7 +74,10 @@ class TableBinder<T>(
 
     fun selection() = copiedRows[table.selectedRow]
 
-    fun onChange(t: T, change: Change) {
+    fun onChange(
+        t: T,
+        change: Change,
+    ) {
         when (change) {
             Change.ADD -> {
                 val index = copiedRows.size
@@ -85,32 +101,38 @@ class TableBinder<T>(
     }
 }
 
-internal class CheckBoxRenderer : JCheckBox(), TableCellRenderer {
-    override fun getTableCellRendererComponent(
-        table: JTable, value: Any, isSelected: Boolean,
-        hasFocus: Boolean, row: Int, column: Int
-    ): Component {
-        setSelected(value as Boolean)
-        background = if (isSelected) {
-            table.selectionBackground
-        } else {
-            table.background
-        }
-        return this
-    }
-}
-
-class PropertyTableCellRenderer<T>(
-    private val textProvider: (T) -> String
-) : DefaultTableCellRenderer() {
-
+internal class CheckBoxRenderer :
+    JCheckBox(),
+    TableCellRenderer {
     override fun getTableCellRendererComponent(
         table: JTable,
         value: Any,
         isSelected: Boolean,
         hasFocus: Boolean,
         row: Int,
-        column: Int
+        column: Int,
+    ): Component {
+        setSelected(value as Boolean)
+        background =
+            if (isSelected) {
+                table.selectionBackground
+            } else {
+                table.background
+            }
+        return this
+    }
+}
+
+class PropertyTableCellRenderer<T>(
+    private val textProvider: (T) -> String,
+) : DefaultTableCellRenderer() {
+    override fun getTableCellRendererComponent(
+        table: JTable,
+        value: Any,
+        isSelected: Boolean,
+        hasFocus: Boolean,
+        row: Int,
+        column: Int,
     ): Component {
         val label = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column) as JLabel
         @Suppress("UNCHECKED_CAST")
@@ -120,10 +142,10 @@ class PropertyTableCellRenderer<T>(
 }
 
 //
-//class AutoResizeTable<T>(
+// class AutoResizeTable<T>(
 //    private val table: TableBinder<T>,
 //    private val listeners: MutableSet<ChangeListener<T>>
-//) : JScrollPane(table) {
+// ) : JScrollPane(table) {
 //    init {
 //        verticalScrollBarPolicy = VERTICAL_SCROLLBAR_NEVER
 //        horizontalScrollBarPolicy = HORIZONTAL_SCROLLBAR_AS_NEEDED
@@ -143,4 +165,4 @@ class PropertyTableCellRenderer<T>(
 //    fun onClose() {
 //        listeners.remove(this::onChange)
 //    }
-//}
+// }

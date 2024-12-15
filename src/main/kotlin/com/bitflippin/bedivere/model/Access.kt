@@ -4,13 +4,17 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File
 
-private fun <T> nextId(items: Collection<T>, f: (T) -> Int) = (items.maxOfOrNull(f) ?: 0) + 1
+private fun <T> nextId(
+    items: Collection<T>,
+    f: (T) -> Int,
+) = (items.maxOfOrNull(f) ?: 0) + 1
 
-fun loadModel(file: File) =
-    Json.decodeFromString<Argmap>(file.readText())
+fun loadModel(file: File) = Json.decodeFromString<Argmap>(file.readText())
 
-fun saveModel(file: File, argmap: Argmap) =
-    file.writeText(Json.encodeToString(argmap))
+fun saveModel(
+    file: File,
+    argmap: Argmap,
+) = file.writeText(Json.encodeToString(argmap))
 
 fun Argmap.addCitation(): Citation {
     val citation = Citation(CitationId(nextId(citations) { it.id.value }))
@@ -43,11 +47,11 @@ fun Argmap.addSupport(): Support {
 }
 
 fun Argmap.lookup(id: CitationId): Citation = citations.first { it.id == id }
+
 fun Argmap.lookup(id: SourceId): Source = sources.first { it.id == id }
+
 fun Argmap.lookup(id: SupportId): Support = supports.first { it.id == id }
 
-fun Argmap.citations(claim: Claim): List<Citation> =
-    claim.citationIds.map { i -> lookup(i) }
+fun Argmap.citations(claim: Claim): List<Citation> = claim.citationIds.map { i -> lookup(i) }
 
-fun Argmap.supports(claim: Claim): List<Support> =
-    claim.supportIds.map { i -> lookup(i) }
+fun Argmap.supports(claim: Claim): List<Support> = claim.supportIds.map { i -> lookup(i) }

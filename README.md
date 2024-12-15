@@ -30,9 +30,9 @@ It's just me developing right now. Here are things I've done and plan to do.
 - [x] Make cell renderer abstraction from `CustomRenderer`
 - [x] Abstract the idea of a `Binder` for better reuse
 - [x] Use swing editor for main form
+- [x] Forms belong in a Java source root
+- [x] Add kotlin linter
 - [ ] Fire change events from table cell edits
-- [ ] Forms belong in a Java source root
-- [ ] Add kotlin linter
 - [ ] Clean up warnings from the Form GUI
 
 ### Cleanup

@@ -8,7 +8,7 @@ typealias DoubleClickListener<T> = (T) -> Unit
 
 private class DoubleClickAdapter<T>(
     private val component: JList<T>,
-    private val listener: DoubleClickListener<T>
+    private val listener: DoubleClickListener<T>,
 ) : MouseAdapter() {
     override fun mouseClicked(event: MouseEvent) {
         if (event.clickCount != 2) {

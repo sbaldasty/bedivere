@@ -10,15 +10,14 @@ fun <T> JList<T>.setCellRenderer(textProvider: (T) -> String) {
 }
 
 private class CustomRenderer<T>(
-    private val textProvider: (T) -> String
+    private val textProvider: (T) -> String,
 ) : DefaultListCellRenderer() {
-
     override fun getListCellRendererComponent(
         list: JList<*>,
         value: Any,
         index: Int,
         isSelected: Boolean,
-        cellHasFocus: Boolean
+        cellHasFocus: Boolean,
     ): Component {
         val label = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus) as JLabel
         @Suppress("UNCHECKED_CAST")

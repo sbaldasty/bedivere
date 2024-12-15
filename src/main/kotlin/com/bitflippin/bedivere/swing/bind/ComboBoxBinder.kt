@@ -15,9 +15,8 @@ class ComboBoxBinder<M, P>(
     model: M,
     listeners: MutableSet<ChangeListener<M>>,
     private val property: KMutableProperty1<M, P>,
-    items: List<P>
+    items: List<P>,
 ) : AbstractSingleBinder<JComboBox<P>, M, M>(ui, model, listeners) {
-
     init {
         ui.model = DefaultComboBoxModel(Vector(items))
         SwingUtilities.invokeLater { onModelUpdate(model) }

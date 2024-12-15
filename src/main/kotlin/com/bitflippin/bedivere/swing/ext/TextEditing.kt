@@ -10,7 +10,9 @@ fun JComponent.addEditListener(listener: EditListener) {
     addFocusListener(FocusLostAdapter(listener))
 }
 
-private class FocusLostAdapter(private val listener: EditListener) : FocusAdapter() {
+private class FocusLostAdapter(
+    private val listener: EditListener,
+) : FocusAdapter() {
     override fun focusLost(event: FocusEvent) {
         listener(event)
     }

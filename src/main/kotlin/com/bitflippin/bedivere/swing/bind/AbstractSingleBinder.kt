@@ -7,21 +7,24 @@ import javax.swing.JComponent
 abstract class AbstractSingleBinder<U : JComponent, M, E>(
     override val ui: U,
     override val model: M,
-    private val listeners: MutableSet<ChangeListener<E>>
+    private val listeners: MutableSet<ChangeListener<E>>,
 ) : Binder<U, M> {
-
-    private val listener = { target: E, change: Change -> when (change) {
-        Change.ADD -> onModelAdd(target)
-        Change.REMOVE -> onModelRemove(target)
-        Change.UPDATE -> onModelUpdate(target)
-    }}
+    private val listener = { target: E, change: Change ->
+        when (change) {
+            Change.ADD -> onModelAdd(target)
+            Change.REMOVE -> onModelRemove(target)
+            Change.UPDATE -> onModelUpdate(target)
+        }
+    }
 
     init {
         listeners.add(listener)
     }
 
     open fun onModelAdd(target: E) { /* Empty */ }
+
     open fun onModelRemove(target: E) { /* Empty */ }
+
     open fun onModelUpdate(target: E) { /* Empty */ }
 
     override fun component() = ui

@@ -6,8 +6,11 @@ enum class Change { ADD, REMOVE, UPDATE }
 
 typealias ChangeListener<T> = (T, Change) -> Unit
 
-fun <T> broadcastChange(listeners: Set<ChangeListener<T>>, t: T, change: Change) =
-    listeners.forEach { it(t, change) }
+fun <T> broadcastChange(
+    listeners: Set<ChangeListener<T>>,
+    t: T,
+    change: Change,
+) = listeners.forEach { it(t, change) }
 
 class Hub {
     val citationListeners = HashSet<ChangeListener<Citation>>()
