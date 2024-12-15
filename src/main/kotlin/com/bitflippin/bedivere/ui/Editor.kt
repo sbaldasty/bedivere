@@ -6,6 +6,7 @@ import com.bitflippin.bedivere.form.MainForm
 import com.bitflippin.bedivere.model.Claim
 import com.bitflippin.bedivere.swing.bind.Binder
 import com.bitflippin.bedivere.swing.bind.ListBinder
+import com.bitflippin.bedivere.swing.ext.setCellRenderer
 
 class Editor(
     override val ui: MainForm,
@@ -16,7 +17,8 @@ class Editor(
     private val sourcesList = ListBinder(ui.sourcesList, model.argmap.sources, model.hub.sourceListeners)
 
     init {
-
+        ui.claimsList.setCellRenderer { x -> x.title }
+        ui.sourcesList.setCellRenderer { x -> x.title }
     }
 
     override fun release() {
