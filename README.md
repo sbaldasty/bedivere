@@ -6,9 +6,9 @@ It's just me developing right now. Here are things I've done and plan to do.
 ### Aesthetics
 - [x] Claim detail form should have section headers
 - [x] Height of claim citations table should vary with contents
-- [ ] What is wrong with table column widths?
+- [x] Claim detail should not fill vertical space unless it needs to
 - [ ] Claim supports should stack vertically
-- [ ] Claim detail should not fill vertical space unless it needs to
+- [ ] What is wrong with table column widths?
 
 ### Bugs
 - [ ] Fix concurrent change listener list modifications
@@ -21,6 +21,7 @@ It's just me developing right now. Here are things I've done and plan to do.
 - [x] Proper label in sources list
 - [x] Source label in claim citations list
 - [x] Titles for tabbed editors
+- [ ] Add the support claims table
 - [ ] Make tabbed editors closable
 - [ ] Should be possible to remove citations from claims
 - [ ] Editor tab focus should switch on opening something new
@@ -37,4 +38,5 @@ It's just me developing right now. Here are things I've done and plan to do.
 - [ ] Clean up warnings from the Form GUI
 
 ### Cleanup
-- Only allow citation source settings when a citation is selected
+- [ ] Citations and sources should not have empty titles
+- [ ] Only allow citation source settings when a citation is selected
