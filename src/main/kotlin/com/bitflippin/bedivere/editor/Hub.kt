@@ -5,6 +5,7 @@ import com.bitflippin.bedivere.model.Claim
 import com.bitflippin.bedivere.model.Ideology
 import com.bitflippin.bedivere.model.Source
 import com.bitflippin.bedivere.model.Support
+import java.util.concurrent.CopyOnWriteArraySet
 
 enum class Change { ADD, REMOVE, UPDATE }
 
@@ -17,9 +18,9 @@ fun <T> broadcastChange(
 ) = listeners.forEach { it(t, change) }
 
 class Hub {
-    val citationListeners = HashSet<ChangeListener<Citation>>()
-    val claimListeners = HashSet<ChangeListener<Claim>>()
-    val ideologyListeners = HashSet<ChangeListener<Ideology>>()
-    val sourceListeners = HashSet<ChangeListener<Source>>()
-    val supportListeners = HashSet<ChangeListener<Support>>()
+    val citationListeners = CopyOnWriteArraySet<ChangeListener<Citation>>()
+    val claimListeners = CopyOnWriteArraySet<ChangeListener<Claim>>()
+    val ideologyListeners = CopyOnWriteArraySet<ChangeListener<Ideology>>()
+    val sourceListeners = CopyOnWriteArraySet<ChangeListener<Source>>()
+    val supportListeners = CopyOnWriteArraySet<ChangeListener<Support>>()
 }
