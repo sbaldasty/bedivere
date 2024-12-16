@@ -40,6 +40,15 @@ fun addSupport(
     return result
 }
 
+fun removeClaimCitation(
+    editorState: EditorState,
+    claim: Claim,
+    citation: Citation,
+) {
+    claim.citationIds.remove(citation.id)
+    broadcastChange(editorState.hub.citationListeners, citation, Change.REMOVE)
+}
+
 fun setCitationSource(
     editorState: EditorState,
     citation: Citation,

@@ -4,6 +4,7 @@ import com.bitflippin.bedivere.editor.Change
 import com.bitflippin.bedivere.editor.EditorState
 import com.bitflippin.bedivere.editor.addCitation
 import com.bitflippin.bedivere.editor.addSupport
+import com.bitflippin.bedivere.editor.removeClaimCitation
 import com.bitflippin.bedivere.editor.setCitationSource
 import com.bitflippin.bedivere.form.ClaimForm
 import com.bitflippin.bedivere.form.SupportForm
@@ -45,11 +46,11 @@ class ClaimDetail(
     init {
         ui.setSourceButton.addActionListener { setCitationSource(editorState, citationsBinder.selection()) }
         ui.addCitationButton.addActionListener { addCitation(editorState, model) }
+        ui.removeCitationButton.addActionListener { removeClaimCitation(editorState, model, citationsBinder.selection()) }
         ui.addSupportButton.addActionListener { addSupport(editorState, model) }
         ui.citationTable.enableAutoResize()
 
         editorState.argmap.supports(model).forEach { addSupportPanel(it) }
-
         editorState.hub.supportListeners.add(this::onSupportChange)
     }
 

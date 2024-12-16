@@ -21,9 +21,9 @@ It's just me developing right now. Here are things I've done and plan to do.
 - [x] Proper label in sources list
 - [x] Source label in claim citations list
 - [x] Titles for tabbed editors
+- [x] Should be possible to remove citations from claims
 - [ ] Add the support claims table
 - [ ] Make tabbed editors closable
-- [ ] Should be possible to remove citations from claims
 - [ ] Editor tab focus should switch on opening something new
 - [ ] No duplicate editor tabs
 
