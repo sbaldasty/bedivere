@@ -7,11 +7,13 @@ It's just me developing right now. Here are things I've done and plan to do.
 - [x] Claim detail form should have section headers
 - [x] Height of claim citations table should vary with contents
 - [x] Claim detail should not fill vertical space unless it needs to
-- [ ] Claim supports should stack vertically
+- [x] Claim supports should stack vertically
 - [ ] What is wrong with table column widths?
 
 ### Bugs
-- [ ] Fix concurrent change listener list modifications
+- [x] Fix concurrent change listener list modifications
+- [ ] Citations and sources should not have empty titles
+- [ ] Only allow citation source settings when a citation is selected
 
 ### Functionality
 - [x] Split pane between source list and tabbed editors
@@ -34,9 +36,6 @@ It's just me developing right now. Here are things I've done and plan to do.
 - [x] Use swing editor for main form
 - [x] Forms belong in a Java source root
 - [x] Add kotlin linter
+- [ ] Move table binders into bind package
 - [ ] Fire change events from table cell edits
 - [ ] Clean up warnings from the Form GUI
-
-### Cleanup
-- [ ] Citations and sources should not have empty titles
-- [ ] Only allow citation source settings when a citation is selected

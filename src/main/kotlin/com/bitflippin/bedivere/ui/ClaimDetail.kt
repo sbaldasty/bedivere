@@ -24,6 +24,8 @@ import com.bitflippin.bedivere.swing.ext.ModularColumn
 import com.bitflippin.bedivere.swing.ext.PropertyTableCellRenderer
 import com.bitflippin.bedivere.swing.ext.TableBinder
 import com.bitflippin.bedivere.swing.ext.enableAutoResize
+import java.awt.GridBagConstraints
+import java.awt.Insets
 import javax.swing.DefaultCellEditor
 import javax.swing.JCheckBox
 import javax.swing.JComboBox
@@ -42,8 +44,14 @@ class ClaimDetail(
     private val confidenceBinder = comboBoxBinder(Confidence.entries.toList(), ui.confidenceComboBox, Claim::confidence)
     private val citationsBinder = createCitationsBinder()
     private val supportBinders = ArrayList<Pair<SupportBinder, SupportForm>>()
+    private val supportGridConstraints = GridBagConstraints()
 
     init {
+        supportGridConstraints.gridx = 0
+        supportGridConstraints.weightx = 1.0
+        supportGridConstraints.fill = GridBagConstraints.HORIZONTAL
+        supportGridConstraints.insets = Insets(5, 5, 5, 5)
+
         ui.setSourceButton.addActionListener { setCitationSource(editorState, citationsBinder.selection()) }
         ui.addCitationButton.addActionListener { addCitation(editorState, model) }
         ui.removeCitationButton.addActionListener { removeClaimCitation(editorState, model, citationsBinder.selection()) }
@@ -55,8 +63,9 @@ class ClaimDetail(
     }
 
     private fun addSupportPanel(support: Support) {
+        supportGridConstraints.gridy += 1
         val supportForm = SupportForm()
-        ui.supportsPanel.add(supportForm.contentPanel)
+        ui.supportsPanel.add(supportForm.contentPanel, supportGridConstraints)
         val binder = SupportBinder(supportForm, editorState, support)
         supportBinders.add(Pair(binder, supportForm))
     }
@@ -68,7 +77,6 @@ class ClaimDetail(
         if (change == Change.ADD) {
             addSupportPanel(support)
         }
-        // TODO Handle other kinds of Support change
     }
 
     override fun release() {
