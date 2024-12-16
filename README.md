@@ -14,6 +14,7 @@ It's just me developing right now. Here are things I've done and plan to do.
 - [x] Fix concurrent change listener list modifications
 - [ ] Citations and sources should not have empty titles
 - [ ] Only allow citation source settings when a citation is selected
+- [ ] Text table cells do not lose focus in time for save
 
 ### Functionality
 - [x] Split pane between source list and tabbed editors

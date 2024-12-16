@@ -83,7 +83,7 @@ class ClaimDetail(
         titleBinder.release()
         descriptionBinder.release()
         confidenceBinder.release()
-        citationsBinder.onClose()
+        citationsBinder.release()
         supportBinders.forEach { it.first.onClose() }
     }
 
@@ -118,8 +118,12 @@ class ClaimDetail(
                 DefaultCellEditor(JCheckBox()),
             )
 
-        val columns = listOf(sourceColumn, descriptionColumn, enthymemeColumn)
-        return TableBinder(columns, editorState.argmap.citations(model), ui.citationTable, editorState.hub.citationListeners)
+        return TableBinder(
+            ui.citationTable,
+            editorState.argmap.citations(model).toMutableList(),
+            editorState.hub.citationListeners,
+            listOf(sourceColumn, descriptionColumn, enthymemeColumn),
+        )
     }
 
     override fun component(): JPanel = ui.contentPanel

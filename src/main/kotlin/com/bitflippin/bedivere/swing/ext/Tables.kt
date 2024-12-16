@@ -1,7 +1,7 @@
 package com.bitflippin.bedivere.swing.ext
 
-import com.bitflippin.bedivere.editor.Change
 import com.bitflippin.bedivere.editor.ChangeListener
+import com.bitflippin.bedivere.swing.bind.AbstractSingleBinder
 import java.awt.Component
 import java.awt.Dimension
 import javax.swing.JCheckBox
@@ -13,7 +13,6 @@ import javax.swing.table.TableCellEditor
 import javax.swing.table.TableCellRenderer
 import kotlin.reflect.KMutableProperty1
 
-// TODO A lot of this stuff belongs in com.bitflippin.bedivere.swing.bind
 class ModularColumn<T>(
     val name: String,
     val width: Int,
@@ -53,52 +52,41 @@ class ColumnDrivenTableModel<T>(
     private fun castProperty(column: ModularColumn<T>) = column.property as KMutableProperty1<T, Any>
 }
 
-class TableBinder<T>(
-    columns: List<ModularColumn<T>>,
-    rows: List<T>,
-    private val table: JTable,
-    private val listeners: MutableSet<ChangeListener<T>>,
-) {
-    private val copiedRows = rows.toMutableList()
-    private val columnDrivenTableModel = ColumnDrivenTableModel(columns, copiedRows)
+class TableBinder<E>(
+    ui: JTable,
+    model: MutableList<E>,
+    listeners: MutableSet<ChangeListener<E>>,
+    columns: List<ModularColumn<E>>,
+) : AbstractSingleBinder<JTable, MutableList<E>, E>(ui, model, listeners) {
+    private val columnDrivenTableModel = ColumnDrivenTableModel(columns, model)
 
     init {
-        table.model = columnDrivenTableModel
-        columns.zip(table.columnModel.columns.toList()) { m, c ->
+        ui.model = columnDrivenTableModel
+        columns.zip(ui.columnModel.columns.toList()) { m, c ->
             c.width = m.width
             c.cellRenderer = m.cellRenderer
             c.cellEditor = m.cellEditor
         }
-        table.repaint()
-        listeners.add(this::onChange)
+        ui.repaint()
     }
 
-    fun selection() = copiedRows[table.selectedRow]
+    fun selection() = model[ui.selectedRow]
 
-    fun onChange(
-        t: T,
-        change: Change,
-    ) {
-        when (change) {
-            Change.ADD -> {
-                val index = copiedRows.size
-                copiedRows.add(t)
-                columnDrivenTableModel.fireTableRowsInserted(index, index)
-            }
-            Change.REMOVE -> {
-                val index = copiedRows.indexOf(t)
-                copiedRows.remove(t)
-                columnDrivenTableModel.fireTableRowsDeleted(index, index)
-            }
-            Change.UPDATE -> {
-                val index = copiedRows.indexOf(t)
-                columnDrivenTableModel.fireTableRowsUpdated(index, index)
-            }
-        }
+    override fun onModelAdd(target: E) {
+        val index = model.size
+        model.add(target)
+        columnDrivenTableModel.fireTableRowsInserted(index, index)
     }
 
-    fun onClose() {
-        listeners.remove(this::onChange)
+    override fun onModelRemove(target: E) {
+        val index = model.indexOf(target)
+        model.remove(target)
+        columnDrivenTableModel.fireTableRowsDeleted(index, index)
+    }
+
+    override fun onModelUpdate(target: E) {
+        val index = model.indexOf(target)
+        columnDrivenTableModel.fireTableRowsUpdated(index, index)
     }
 }
 
