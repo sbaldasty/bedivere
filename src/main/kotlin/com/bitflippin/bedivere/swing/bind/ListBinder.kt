@@ -8,7 +8,7 @@ class ListBinder<E>(
     ui: JList<E>,
     model: List<E>,
     listeners: MutableSet<ChangeListener<E>>,
-) : AbstractSingleBinder<JList<E>, List<E>, E>(ui, model, listeners) {
+) : AbstractSingleBinder<JList<E>, List<E>, E>(ui, model, ui, listeners) {
     private val list = DefaultListModel<E>()
 
     init {

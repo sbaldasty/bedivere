@@ -5,6 +5,7 @@ import javax.swing.JComponent
 interface Binder<U, M> {
     val ui: U
     val model: M
-    fun component(): JComponent
+    val component: JComponent
+
     fun release()
 }

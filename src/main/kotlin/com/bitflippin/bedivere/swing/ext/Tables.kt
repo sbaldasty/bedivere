@@ -57,7 +57,7 @@ class TableBinder<E>(
     model: MutableList<E>,
     listeners: MutableSet<ChangeListener<E>>,
     columns: List<ModularColumn<E>>,
-) : AbstractSingleBinder<JTable, MutableList<E>, E>(ui, model, listeners) {
+) : AbstractSingleBinder<JTable, MutableList<E>, E>(ui, model, ui, listeners) {
     private val columnDrivenTableModel = ColumnDrivenTableModel(columns, model)
 
     init {

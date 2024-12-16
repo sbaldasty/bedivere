@@ -16,7 +16,7 @@ import com.bitflippin.bedivere.model.Support
 import com.bitflippin.bedivere.model.citations
 import com.bitflippin.bedivere.model.lookup
 import com.bitflippin.bedivere.model.supports
-import com.bitflippin.bedivere.swing.bind.Binder
+import com.bitflippin.bedivere.swing.bind.AbstractSingleBinder
 import com.bitflippin.bedivere.swing.bind.ComboBoxBinder
 import com.bitflippin.bedivere.swing.bind.TextFieldBinder
 import com.bitflippin.bedivere.swing.ext.CheckBoxRenderer
@@ -29,16 +29,15 @@ import java.awt.Insets
 import javax.swing.DefaultCellEditor
 import javax.swing.JCheckBox
 import javax.swing.JComboBox
-import javax.swing.JPanel
 import javax.swing.JTextField
 import javax.swing.table.DefaultTableCellRenderer
 import kotlin.reflect.KMutableProperty1
 
 class ClaimDetail(
-    override val ui: ClaimForm,
-    override val model: Claim,
+    ui: ClaimForm,
+    model: Claim,
     private val editorState: EditorState,
-) : Binder<ClaimForm, Claim> {
+) : AbstractSingleBinder<ClaimForm, Claim, Claim>(ui, model, ui.contentPanel, editorState.hub.claimListeners) {
     private val titleBinder = textFieldBinder(ui.titleTextField, Claim::title)
     private val descriptionBinder = textFieldBinder(ui.descriptionTextField, Claim::description)
     private val confidenceBinder = comboBoxBinder(Confidence.entries.toList(), ui.confidenceComboBox, Claim::confidence)
@@ -125,8 +124,6 @@ class ClaimDetail(
             listOf(sourceColumn, descriptionColumn, enthymemeColumn),
         )
     }
-
-    override fun component(): JPanel = ui.contentPanel
 
     private fun <U> comboBoxBinder(
         items: List<U>,

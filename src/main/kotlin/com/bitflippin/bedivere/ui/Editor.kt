@@ -8,16 +8,16 @@ import com.bitflippin.bedivere.form.MainForm
 import com.bitflippin.bedivere.form.SourceForm
 import com.bitflippin.bedivere.model.SourceId
 import com.bitflippin.bedivere.model.saveModel
-import com.bitflippin.bedivere.swing.bind.Binder
+import com.bitflippin.bedivere.swing.bind.AbstractSingleBinder
 import com.bitflippin.bedivere.swing.bind.ListBinder
 import com.bitflippin.bedivere.swing.ext.addDoubleClickListener
 import com.bitflippin.bedivere.swing.ext.setCellRenderer
-import javax.swing.JPanel
+import java.util.concurrent.CopyOnWriteArraySet
 
 class Editor(
-    override val ui: MainForm,
-    override val model: EditorState,
-) : Binder<MainForm, EditorState> {
+    ui: MainForm,
+    model: EditorState,
+) : AbstractSingleBinder<MainForm, EditorState, EditorState>(ui, model, ui.contentPanel, CopyOnWriteArraySet()) {
     private val claimsList = ListBinder(ui.claimsList, model.argmap.claims, model.hub.claimListeners)
     private val sourcesList = ListBinder(ui.sourcesList, model.argmap.sources, model.hub.sourceListeners)
 
@@ -35,8 +35,6 @@ class Editor(
             }
         }
     }
-
-    override fun component(): JPanel = ui.contentPanel
 
     override fun release() {
         claimsList.release()

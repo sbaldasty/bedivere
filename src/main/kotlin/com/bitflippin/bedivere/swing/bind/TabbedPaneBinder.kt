@@ -10,7 +10,7 @@ class TabbedPaneBinder(
 ) : Binder<JTabbedPane, List<Binder<*, *>>> {
     override val model = ArrayList<Binder<*, *>>()
 
-    override fun component() = ui
+    override val component = ui
 
     override fun release() {
         model.forEach { it.release() }
@@ -22,7 +22,7 @@ class TabbedPaneBinder(
     ) {
         val content = JPanel()
         content.layout = BorderLayout()
-        val scrollPane = JScrollPane(detail.component())
+        val scrollPane = JScrollPane(detail.component)
         content.add(scrollPane, BorderLayout.CENTER)
         ui.add(tabText, content)
     }
