@@ -16,9 +16,9 @@ import com.bitflippin.bedivere.model.Support
 import com.bitflippin.bedivere.model.citations
 import com.bitflippin.bedivere.model.lookup
 import com.bitflippin.bedivere.model.supports
-import com.bitflippin.bedivere.swing.bind.AbstractSingleBinder
-import com.bitflippin.bedivere.swing.bind.ComboBoxBinder
-import com.bitflippin.bedivere.swing.bind.TextFieldBinder
+import com.bitflippin.bedivere.swing.bind.Binder
+import com.bitflippin.bedivere.swing.bind.comboBoxBinder
+import com.bitflippin.bedivere.swing.bind.textFieldBinder
 import com.bitflippin.bedivere.swing.ext.CheckBoxRenderer
 import com.bitflippin.bedivere.swing.ext.ModularColumn
 import com.bitflippin.bedivere.swing.ext.PropertyTableCellRenderer
@@ -28,16 +28,17 @@ import java.awt.GridBagConstraints
 import java.awt.Insets
 import javax.swing.DefaultCellEditor
 import javax.swing.JCheckBox
-import javax.swing.JComboBox
 import javax.swing.JTextField
 import javax.swing.table.DefaultTableCellRenderer
-import kotlin.reflect.KMutableProperty1
 
 class ClaimDetail(
-    ui: ClaimForm,
-    model: Claim,
+    override val model: Claim,
     private val editorState: EditorState,
-) : AbstractSingleBinder<ClaimForm, Claim, Claim>(ui, model, ui.contentPanel, editorState.hub.claimListeners) {
+) : Binder<ClaimForm, Claim, Claim> {
+
+    override val ui = ClaimForm()
+    override val listeners = editorState.hub.claimListeners
+
     private val titleBinder = textFieldBinder(ui.titleTextField, Claim::title)
     private val descriptionBinder = textFieldBinder(ui.descriptionTextField, Claim::description)
     private val confidenceBinder = comboBoxBinder(Confidence.entries.toList(), ui.confidenceComboBox, Claim::confidence)
@@ -63,16 +64,13 @@ class ClaimDetail(
 
     private fun addSupportPanel(support: Support) {
         supportGridConstraints.gridy += 1
-        val supportForm = SupportForm()
-        ui.supportsPanel.add(supportForm.contentPanel, supportGridConstraints)
-        val binder = SupportBinder(supportForm, editorState, support)
-        supportBinders.add(Pair(binder, supportForm))
+        val binder = SupportBinder(support, editorState)
+        val supportBinder = SupportForm()
+        ui.supportsPanel.add(supportBinder.contentPanel, supportGridConstraints)
+        supportBinders.add(Pair(binder, supportBinder))
     }
 
-    private fun onSupportChange(
-        support: Support,
-        change: Change,
-    ) {
+    private fun onSupportChange(support: Support, change: Change) {
         if (change == Change.ADD) {
             addSupportPanel(support)
         }
@@ -83,7 +81,7 @@ class ClaimDetail(
         descriptionBinder.release()
         confidenceBinder.release()
         citationsBinder.release()
-        supportBinders.forEach { it.first.onClose() }
+        supportBinders.forEach { it.first.release() }
     }
 
     private fun createCitationsBinder(): TableBinder<Citation> {
@@ -124,15 +122,4 @@ class ClaimDetail(
             listOf(sourceColumn, descriptionColumn, enthymemeColumn),
         )
     }
-
-    private fun <U> comboBoxBinder(
-        items: List<U>,
-        comboBox: JComboBox<U>,
-        property: KMutableProperty1<Claim, U>,
-    ) = ComboBoxBinder(comboBox, model, editorState.hub.claimListeners, property, items)
-
-    private fun textFieldBinder(
-        textField: JTextField,
-        property: KMutableProperty1<Claim, String>,
-    ) = TextFieldBinder(textField, model, editorState.hub.claimListeners, property)
 }

@@ -1,11 +1,11 @@
 package com.bitflippin.bedivere.swing.bind
 
-import javax.swing.JComponent
+import com.bitflippin.bedivere.editor.ChangeListener
 
-interface Binder<U, M> {
+interface Binder<U, M, L> {
     val ui: U
     val model: M
-    val component: JComponent
+    val listeners: MutableSet<ChangeListener<L>>
 
     fun release()
 }

@@ -11,12 +11,13 @@ import javax.swing.SwingUtilities
 import kotlin.reflect.KMutableProperty1
 
 class ComboBoxBinder<M, P>(
-    ui: JComboBox<P>,
-    model: M,
+    override val ui: JComboBox<P>,
+    override val model: M,
     listeners: MutableSet<ChangeListener<M>>,
     private val property: KMutableProperty1<M, P>,
-    items: List<P>,
-) : AbstractSingleBinder<JComboBox<P>, M, M>(ui, model, ui, listeners) {
+    items: List<P>
+) : SimpleBinder<JComboBox<P>, M, M>(listeners) {
+
     init {
         ui.model = DefaultComboBoxModel(Vector(items))
         SwingUtilities.invokeLater { onModelUpdate(model) }

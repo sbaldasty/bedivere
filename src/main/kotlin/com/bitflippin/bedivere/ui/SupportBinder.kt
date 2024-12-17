@@ -4,33 +4,23 @@ import com.bitflippin.bedivere.editor.EditorState
 import com.bitflippin.bedivere.form.SupportForm
 import com.bitflippin.bedivere.model.Strength
 import com.bitflippin.bedivere.model.Support
-import com.bitflippin.bedivere.swing.bind.ComboBoxBinder
-import com.bitflippin.bedivere.swing.bind.TextFieldBinder
-import javax.swing.JComboBox
-import javax.swing.JTextField
-import kotlin.reflect.KMutableProperty1
+import com.bitflippin.bedivere.swing.bind.Binder
+import com.bitflippin.bedivere.swing.bind.comboBoxBinder
+import com.bitflippin.bedivere.swing.bind.textFieldBinder
 
 class SupportBinder(
-    component: SupportForm,
-    private val editorState: EditorState,
-    private val model: Support,
-) {
-    private val descriptionBinder = textFieldBinder(component.descriptionTextField, Support::description)
-    private val strengthBinder = comboBoxBinder(Strength.entries.toList(), component.strengthComboBox, Support::strength)
+    override val model: Support,
+    editorState: EditorState,
+) : Binder<SupportForm, Support, Support> {
 
-    fun onClose() {
+    override val ui = SupportForm()
+    override val listeners = editorState.hub.supportListeners
+
+    private val descriptionBinder = textFieldBinder(ui.descriptionTextField, Support::description)
+    private val strengthBinder = comboBoxBinder(Strength.entries.toList(), ui.strengthComboBox, Support::strength)
+
+    override fun release() {
         descriptionBinder.release()
         strengthBinder.release()
     }
-
-    private fun <U> comboBoxBinder(
-        items: List<U>,
-        comboBox: JComboBox<U>,
-        property: KMutableProperty1<Support, U>,
-    ) = ComboBoxBinder(comboBox, model, editorState.hub.supportListeners, property, items)
-
-    private fun textFieldBinder(
-        textField: JTextField,
-        property: KMutableProperty1<Support, String>,
-    ) = TextFieldBinder(textField, model, editorState.hub.supportListeners, property)
 }

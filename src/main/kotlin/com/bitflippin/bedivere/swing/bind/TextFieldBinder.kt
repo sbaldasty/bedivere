@@ -8,11 +8,12 @@ import javax.swing.JTextField
 import kotlin.reflect.KMutableProperty1
 
 class TextFieldBinder<M>(
-    ui: JTextField,
-    model: M,
+    override val ui: JTextField,
+    override val model: M,
     listeners: MutableSet<ChangeListener<M>>,
-    private val property: KMutableProperty1<M, String>,
-) : AbstractSingleBinder<JTextField, M, M>(ui, model, ui, listeners) {
+    private val property: KMutableProperty1<M, String>
+) : SimpleBinder<JTextField, M, M>(listeners) {
+
     init {
         onModelUpdate(model)
         ui.addEditListener {

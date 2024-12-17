@@ -5,10 +5,10 @@ import javax.swing.DefaultListModel
 import javax.swing.JList
 
 class ListBinder<E>(
-    ui: JList<E>,
-    model: List<E>,
+    override val ui: JList<E>,
+    override val model: List<E>,
     listeners: MutableSet<ChangeListener<E>>,
-) : AbstractSingleBinder<JList<E>, List<E>, E>(ui, model, ui, listeners) {
+) : SimpleBinder<JList<E>, List<E>, E>(listeners) {
     private val list = DefaultListModel<E>()
 
     init {

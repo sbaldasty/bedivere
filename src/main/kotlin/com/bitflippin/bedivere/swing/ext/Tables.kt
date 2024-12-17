@@ -1,7 +1,7 @@
 package com.bitflippin.bedivere.swing.ext
 
 import com.bitflippin.bedivere.editor.ChangeListener
-import com.bitflippin.bedivere.swing.bind.AbstractSingleBinder
+import com.bitflippin.bedivere.swing.bind.SimpleBinder
 import java.awt.Component
 import java.awt.Dimension
 import javax.swing.JCheckBox
@@ -53,11 +53,12 @@ class ColumnDrivenTableModel<T>(
 }
 
 class TableBinder<E>(
-    ui: JTable,
-    model: MutableList<E>,
+    override val ui: JTable,
+    override val model: MutableList<E>,
     listeners: MutableSet<ChangeListener<E>>,
-    columns: List<ModularColumn<E>>,
-) : AbstractSingleBinder<JTable, MutableList<E>, E>(ui, model, ui, listeners) {
+    columns: List<ModularColumn<E>>
+) : SimpleBinder<JTable, MutableList<E>, E>(listeners) {
+
     private val columnDrivenTableModel = ColumnDrivenTableModel(columns, model)
 
     init {
