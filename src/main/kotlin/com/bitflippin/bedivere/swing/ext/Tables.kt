@@ -1,7 +1,5 @@
 package com.bitflippin.bedivere.swing.ext
 
-import com.bitflippin.bedivere.editor.ChangeListener
-import com.bitflippin.bedivere.swing.bind.SimpleBinder
 import java.awt.Component
 import java.awt.Dimension
 import javax.swing.JCheckBox
@@ -26,6 +24,7 @@ class ColumnDrivenTableModel<T>(
     private val columns: List<ModularColumn<T>>,
     private val rows: List<T>,
 ) : AbstractTableModel() {
+
     override fun getColumnName(column: Int) = columns[column].name
 
     override fun getRowCount() = rows.size
@@ -50,45 +49,6 @@ class ColumnDrivenTableModel<T>(
 
     @Suppress("UNCHECKED_CAST")
     private fun castProperty(column: ModularColumn<T>) = column.property as KMutableProperty1<T, Any>
-}
-
-class TableBinder<E>(
-    override val ui: JTable,
-    override val model: MutableList<E>,
-    listeners: MutableSet<ChangeListener<E>>,
-    columns: List<ModularColumn<E>>
-) : SimpleBinder<JTable, MutableList<E>, E>(listeners) {
-
-    private val columnDrivenTableModel = ColumnDrivenTableModel(columns, model)
-
-    init {
-        ui.model = columnDrivenTableModel
-        columns.zip(ui.columnModel.columns.toList()) { m, c ->
-            c.width = m.width
-            c.cellRenderer = m.cellRenderer
-            c.cellEditor = m.cellEditor
-        }
-        ui.repaint()
-    }
-
-    fun selection() = model[ui.selectedRow]
-
-    override fun onModelAdd(target: E) {
-        val index = model.size
-        model.add(target)
-        columnDrivenTableModel.fireTableRowsInserted(index, index)
-    }
-
-    override fun onModelRemove(target: E) {
-        val index = model.indexOf(target)
-        model.remove(target)
-        columnDrivenTableModel.fireTableRowsDeleted(index, index)
-    }
-
-    override fun onModelUpdate(target: E) {
-        val index = model.indexOf(target)
-        columnDrivenTableModel.fireTableRowsUpdated(index, index)
-    }
 }
 
 internal class CheckBoxRenderer :

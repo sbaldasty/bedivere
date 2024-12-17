@@ -8,7 +8,7 @@ import com.bitflippin.bedivere.swing.bind.Binder
 import com.bitflippin.bedivere.swing.bind.comboBoxBinder
 import com.bitflippin.bedivere.swing.bind.textFieldBinder
 
-class SupportBinder(
+class SupportDetail(
     override val model: Support,
     editorState: EditorState,
 ) : Binder<SupportForm, Support, Support> {
