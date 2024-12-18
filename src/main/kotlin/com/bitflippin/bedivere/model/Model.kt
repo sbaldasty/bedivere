@@ -83,6 +83,7 @@ data class Support(
     var description: String = "",
     var strength: Strength = Strength.UNEXAMINED,
     var citationIds: MutableList<CitationId> = ArrayList(),
+    var claimIds: MutableList<ClaimId> = ArrayList()
 )
 
 enum class Confidence { TRUE, LIKELY, NEUTRAL, UNLIKELY, FALSE, UNEXAMINED }

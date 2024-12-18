@@ -56,6 +56,9 @@ class ClaimDetail(
         val binder = SupportDetail(support, editorState)
         val supportBinder = SupportForm()
         ui.supportsPanel.add(supportBinder.contentPanel, supportGridConstraints)
+        ui.supportsPanel.revalidate()
+        ui.contentPanel.revalidate()
+        ui.contentPanel.repaint()
         supportBinders.add(Pair(binder, supportBinder))
     }
 

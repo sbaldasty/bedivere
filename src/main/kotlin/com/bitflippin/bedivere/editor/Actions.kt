@@ -40,6 +40,15 @@ fun addSupport(
     return result
 }
 
+fun addSupportClaim(
+    editorState: EditorState,
+    support: Support,
+    claim: Claim
+): Claim {
+    support.claimIds.add(claim.id)
+    return Claim()
+}
+
 fun removeClaimCitation(
     editorState: EditorState,
     claim: Claim,
