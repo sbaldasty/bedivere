@@ -54,12 +54,11 @@ class ClaimDetail(
     private fun addSupportPanel(support: Support) {
         supportGridConstraints.gridy += 1
         val binder = SupportDetail(support, editorState)
-        val supportBinder = SupportForm()
-        ui.supportsPanel.add(supportBinder.contentPanel, supportGridConstraints)
+        ui.supportsPanel.add(binder.ui.contentPanel, supportGridConstraints)
         ui.supportsPanel.revalidate()
         ui.contentPanel.revalidate()
         ui.contentPanel.repaint()
-        supportBinders.add(Pair(binder, supportBinder))
+        supportBinders.add(Pair(binder, binder.ui))
     }
 
     private fun onSupportChange(support: Support, change: Change) {
