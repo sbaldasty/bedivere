@@ -1,7 +1,8 @@
 package com.bitflippin.bedivere.ui
 
 import com.bitflippin.bedivere.editor.EditorState
-import com.bitflippin.bedivere.model.Citation
+import com.bitflippin.bedivere.model.ClaimSource
+import com.bitflippin.bedivere.model.Source
 import com.bitflippin.bedivere.model.SourceId
 import com.bitflippin.bedivere.model.lookup
 import com.bitflippin.bedivere.swing.bind.TableBinder
@@ -19,7 +20,7 @@ private fun sourceColumn(editorState: EditorState) =
         "Source",
         32,
         { false },
-        Citation::sourceId,
+        ClaimSource::sourceId,
         PropertyTableCellRenderer { x: SourceId -> if (x.value == 0) "(none)" else editorState.argmap.lookup(x).title },
         DefaultCellEditor(JTextField()),
     )
@@ -29,7 +30,7 @@ private fun descriptionColumn() =
         "Description",
         75,
         { true },
-        Citation::description,
+        ClaimSource::description,
         DefaultTableCellRenderer(),
         DefaultCellEditor(JTextField()),
     )
@@ -39,13 +40,13 @@ private fun enthymemeColumn() =
         "Enthymeme",
         32,
         { true },
-        Citation::enthymeme,
+        ClaimSource::enthymeme,
         CheckBoxRenderer(),
         DefaultCellEditor(JCheckBox()),
     )
 
 class CitationTable(
     ui: JTable,
-    model: MutableList<Citation>,
+    model: MutableList<ClaimSource>,
     private val editorState: EditorState
-) : TableBinder<Citation>(ui, model, editorState.hub.citationListeners, listOf(sourceColumn(editorState), descriptionColumn(), enthymemeColumn()))
+) : TableBinder<ClaimSource>(ui, model, editorState.hub.citationListeners, listOf(sourceColumn(editorState), descriptionColumn(), enthymemeColumn()))

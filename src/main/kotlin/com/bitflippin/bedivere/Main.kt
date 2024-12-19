@@ -3,7 +3,7 @@ package com.bitflippin.bedivere
 import com.bitflippin.bedivere.editor.EditorState
 import com.bitflippin.bedivere.editor.Hub
 import com.bitflippin.bedivere.form.MainForm
-import com.bitflippin.bedivere.model.loadModel
+import com.bitflippin.bedivere.model.loadDatabase
 import com.bitflippin.bedivere.swing.bind.TabbedPaneBinder
 import com.bitflippin.bedivere.ui.Editor
 import java.awt.Dimension
@@ -18,9 +18,8 @@ fun main() {
             devfile.writeText("{}")
         }
         val form = MainForm()
-        val argmap = loadModel(devfile)
+        val argmap = loadDatabase(devfile)
         val state = EditorState(argmap, devfile, Hub(), TabbedPaneBinder(form.detailsTabbedPane))
-        // val frame = MainFrame(state)
         val frame = Fr()
         val editor = Editor(form, state)
         frame.add(form.contentPanel)

@@ -11,8 +11,6 @@ import com.bitflippin.bedivere.form.SupportForm
 import com.bitflippin.bedivere.model.Claim
 import com.bitflippin.bedivere.model.Confidence
 import com.bitflippin.bedivere.model.Support
-import com.bitflippin.bedivere.model.citations
-import com.bitflippin.bedivere.model.supports
 import com.bitflippin.bedivere.swing.bind.Binder
 import com.bitflippin.bedivere.swing.bind.comboBoxBinder
 import com.bitflippin.bedivere.swing.bind.textFieldBinder
@@ -31,7 +29,7 @@ class ClaimDetail(
     private val titleBinder = textFieldBinder(ui.titleTextField, Claim::title)
     private val descriptionBinder = textFieldBinder(ui.descriptionTextField, Claim::description)
     private val confidenceBinder = comboBoxBinder(Confidence.entries.toList(), ui.confidenceComboBox, Claim::confidence)
-    private val citationsBinder = CitationTable(ui.citationTable, editorState.argmap.citations(model).toMutableList(), editorState)
+    private val citationsBinder = CitationTable(ui.citationTable, editorState.argmap.lookupClaimSources(model), editorState)
     private val supportBinders = ArrayList<Pair<SupportDetail, SupportForm>>()
     private val supportGridConstraints = GridBagConstraints()
 
@@ -47,7 +45,7 @@ class ClaimDetail(
         ui.addSupportButton.addActionListener { addSupport(editorState, model) }
         ui.citationTable.enableAutoResize()
 
-        editorState.argmap.supports(model).forEach { addSupportPanel(it) }
+        editorState.argmap.lookupSupports(model).forEach { addSupportPanel(it) }
         editorState.hub.supportListeners.add(this::onSupportChange)
     }
 

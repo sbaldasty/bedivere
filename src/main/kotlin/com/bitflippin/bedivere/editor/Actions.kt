@@ -1,20 +1,16 @@
 package com.bitflippin.bedivere.editor
 
-import com.bitflippin.bedivere.model.Citation
 import com.bitflippin.bedivere.model.Claim
+import com.bitflippin.bedivere.model.ClaimSource
 import com.bitflippin.bedivere.model.Source
 import com.bitflippin.bedivere.model.Support
-import com.bitflippin.bedivere.model.addCitation
-import com.bitflippin.bedivere.model.addClaim
-import com.bitflippin.bedivere.model.addSource
-import com.bitflippin.bedivere.model.addSupport
 
 fun addCitation(
     editorState: EditorState,
     claim: Claim,
 ) {
-    val result = editorState.argmap.addCitation()
-    claim.citationIds.add(result.id)
+    val result = editorState.argmap.addClaimSource()
+    result.claimId = claim.id
     broadcastChange(editorState.hub.citationListeners, result, Change.ADD)
 }
 
@@ -35,32 +31,23 @@ fun addSupport(
     claim: Claim,
 ): Support {
     val result = editorState.argmap.addSupport()
-    claim.supportIds.add(result.id)
+    result.claimId = claim.id
     broadcastChange(editorState.hub.supportListeners, result, Change.ADD)
     return result
-}
-
-fun addSupportClaim(
-    editorState: EditorState,
-    support: Support,
-    claim: Claim
-): Claim {
-    support.claimIds.add(claim.id)
-    return Claim()
 }
 
 fun removeClaimCitation(
     editorState: EditorState,
     claim: Claim,
-    citation: Citation,
+    citation: ClaimSource,
 ) {
-    claim.citationIds.remove(citation.id)
+    editorState.argmap.claimSources.remove(citation)
     broadcastChange(editorState.hub.citationListeners, citation, Change.REMOVE)
 }
 
 fun setCitationSource(
     editorState: EditorState,
-    citation: Citation,
+    citation: ClaimSource,
 ) {
     citation.sourceId = editorState.selectedSourceId
     broadcastChange(editorState.hub.citationListeners, citation, Change.UPDATE)

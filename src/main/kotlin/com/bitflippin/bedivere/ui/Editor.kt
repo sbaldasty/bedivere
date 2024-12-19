@@ -6,7 +6,6 @@ import com.bitflippin.bedivere.editor.addClaim
 import com.bitflippin.bedivere.editor.addSource
 import com.bitflippin.bedivere.form.MainForm
 import com.bitflippin.bedivere.model.SourceId
-import com.bitflippin.bedivere.model.saveModel
 import com.bitflippin.bedivere.swing.bind.Binder
 import com.bitflippin.bedivere.swing.bind.ListBinder
 import com.bitflippin.bedivere.swing.ext.addDoubleClickListener
@@ -24,7 +23,7 @@ class Editor(
     private val sourcesList = ListBinder(ui.sourcesList, model.argmap.sources, model.hub.sourceListeners)
 
     init {
-        ui.saveButton.addActionListener { saveModel(model.file, model.argmap) }
+        ui.saveButton.addActionListener { model.argmap.save(model.file) }
         ui.addClaimButton.addActionListener { addClaim(model) }
         ui.addSourceButton.addActionListener { addSource(model) }
         ui.claimsList.addDoubleClickListener {

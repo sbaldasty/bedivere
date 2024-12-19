@@ -1,7 +1,6 @@
 package com.bitflippin.bedivere.ui
 
 import com.bitflippin.bedivere.editor.EditorState
-import com.bitflippin.bedivere.model.Citation
 import com.bitflippin.bedivere.model.Claim
 import com.bitflippin.bedivere.swing.bind.TableBinder
 import com.bitflippin.bedivere.swing.ext.ModularColumn

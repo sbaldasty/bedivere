@@ -2,8 +2,6 @@ package com.bitflippin.bedivere.ui
 
 import com.bitflippin.bedivere.editor.EditorState
 import com.bitflippin.bedivere.form.SupportForm
-import com.bitflippin.bedivere.model.citations
-import com.bitflippin.bedivere.model.claims
 import com.bitflippin.bedivere.model.Strength
 import com.bitflippin.bedivere.model.Support
 import com.bitflippin.bedivere.swing.bind.Binder
@@ -21,8 +19,8 @@ class SupportDetail(
 
     private val descriptionBinder = textFieldBinder(ui.descriptionTextField, Support::description)
     private val strengthBinder = comboBoxBinder(Strength.entries.toList(), ui.strengthComboBox, Support::strength)
-    private val citationsBinder = CitationTable(ui.citationTable, editorState.argmap.citations(model).toMutableList(), editorState)
-    private val claimsBinder = SupportClaimTable(ui.claimTable, editorState.argmap.claims(model).toMutableList(), editorState)
+    private val citationsBinder = CitationTable(ui.citationTable, editorState.argmap.lookupClaimSources(model), editorState)
+    private val claimsBinder = SupportClaimTable(ui.claimTable, editorState.argmap.lookupClaims(model), editorState)
 
     init {
         ui.addClaimButton.addActionListener {  }
