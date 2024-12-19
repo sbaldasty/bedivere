@@ -14,7 +14,7 @@ class SourceDetail(
 
     override val ui = SourceForm()
     override val listeners = editorState.hub.sourceListeners
-    override val title = "Claim ${model.id}"
+    override val title = "Source ${model.id.value}"
     override val component: JComponent = ui.contentPanel
 
     private val titleBinder = textFieldBinder(ui.titleTextField, Source::title)

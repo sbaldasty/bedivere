@@ -26,7 +26,7 @@ class ClaimDetail(
 
     override val ui = ClaimForm()
     override val listeners = editorState.hub.claimListeners
-    override val title = "Claim ${model.id}"
+    override val title = "Claim ${model.id.value}"
     override val component: JComponent = ui.contentPanel
 
     private val titleBinder = textFieldBinder(ui.titleTextField, Claim::title)
