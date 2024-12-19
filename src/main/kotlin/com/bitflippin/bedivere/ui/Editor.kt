@@ -26,15 +26,9 @@ class Editor(
         ui.saveButton.addActionListener { model.argmap.save(model.file) }
         ui.addClaimButton.addActionListener { addClaim(model) }
         ui.addSourceButton.addActionListener { addSource(model) }
-        ui.claimsList.addDoubleClickListener {
-            val binder = ClaimDetail(it, model)
-            model.detailTabs.open("Claim ${it.id.value}", binder.ui.contentPanel, binder)
-        }
+        ui.claimsList.addDoubleClickListener { model.detailTabs.open(ClaimDetail(it, model)) }
         ui.claimsList.setCellRenderer { x -> x.title }
-        ui.sourcesList.addDoubleClickListener {
-            val binder = SourceDetail(it, model)
-            model.detailTabs.open("Source ${it.id.value}", binder.ui.contentPanel, binder)
-        }
+        ui.sourcesList.addDoubleClickListener { model.detailTabs.open(SourceDetail(it, model)) }
         ui.sourcesList.setCellRenderer { x -> x.title }
         ui.sourcesList.addListSelectionListener {
             if (!it.valueIsAdjusting) {

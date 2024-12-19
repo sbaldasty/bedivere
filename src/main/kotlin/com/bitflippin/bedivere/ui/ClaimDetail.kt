@@ -11,20 +11,23 @@ import com.bitflippin.bedivere.form.SupportForm
 import com.bitflippin.bedivere.model.Claim
 import com.bitflippin.bedivere.model.Confidence
 import com.bitflippin.bedivere.model.Support
-import com.bitflippin.bedivere.swing.bind.Binder
+import com.bitflippin.bedivere.swing.bind.TabBinder
 import com.bitflippin.bedivere.swing.bind.comboBoxBinder
 import com.bitflippin.bedivere.swing.bind.textFieldBinder
 import com.bitflippin.bedivere.swing.ext.enableAutoResize
 import java.awt.GridBagConstraints
 import java.awt.Insets
+import javax.swing.JComponent
 
 class ClaimDetail(
     override val model: Claim,
     private val editorState: EditorState,
-) : Binder<ClaimForm, Claim, Claim> {
+) : TabBinder<ClaimForm, Claim, Claim> {
 
     override val ui = ClaimForm()
     override val listeners = editorState.hub.claimListeners
+    override val title = "Claim ${model.id}"
+    override val component: JComponent = ui.contentPanel
 
     private val titleBinder = textFieldBinder(ui.titleTextField, Claim::title)
     private val descriptionBinder = textFieldBinder(ui.descriptionTextField, Claim::description)

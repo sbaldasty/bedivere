@@ -19,9 +19,6 @@ fun loadDatabase(file: File) =
 fun <I : Id, E : Entity<I>> Iterable<E>.lookup(id: I) =
     first { it.id == id }
 
-private fun <I : Id, E : Entity<I>> Iterable<E>.lookup(ids: Iterable<I>) =
-    ids.map { lookup(it) }
-
 private fun <E : Entity<*>> Iterable<E>.nextId() =
     (maxOfOrNull { it.id.value } ?: 0) + 1
 
