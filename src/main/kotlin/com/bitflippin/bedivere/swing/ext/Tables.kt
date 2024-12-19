@@ -9,13 +9,13 @@ import javax.swing.table.AbstractTableModel
 import javax.swing.table.DefaultTableCellRenderer
 import javax.swing.table.TableCellEditor
 import javax.swing.table.TableCellRenderer
-import kotlin.reflect.KMutableProperty1
 
 class ModularColumn<T>(
     val name: String,
     val width: Int,
     val editable: (T) -> Boolean,
-    val property: KMutableProperty1<T, *>,
+    val reader: (T) -> Any,
+    val writer: (T, Any) -> Unit,
     val cellRenderer: TableCellRenderer,
     val cellEditor: TableCellEditor,
 )
@@ -25,30 +25,23 @@ class ColumnDrivenTableModel<T>(
     private val rows: List<T>,
 ) : AbstractTableModel() {
 
-    override fun getColumnName(column: Int) = columns[column].name
+    override fun getColumnName(column: Int) =
+        columns[column].name
 
-    override fun getRowCount() = rows.size
+    override fun getRowCount() =
+        rows.size
 
-    override fun getColumnCount() = columns.size
+    override fun getColumnCount() =
+        columns.size
 
-    override fun getValueAt(
-        row: Int,
-        column: Int,
-    ) = columns[column].property(rows[row])
+    override fun getValueAt(row: Int, column: Int) =
+        columns[column].reader(rows[row])
 
-    override fun setValueAt(
-        value: Any,
-        row: Int,
-        column: Int,
-    ) = castProperty(columns[column]).set(rows[row], value)
+    override fun setValueAt(value: Any, row: Int, column: Int) =
+        columns[column].writer(rows[row], value)
 
-    override fun isCellEditable(
-        row: Int,
-        column: Int,
-    ) = columns[column].editable(rows[row])
-
-    @Suppress("UNCHECKED_CAST")
-    private fun castProperty(column: ModularColumn<T>) = column.property as KMutableProperty1<T, Any>
+    override fun isCellEditable(row: Int, column: Int) =
+        columns[column].editable(rows[row])
 }
 
 internal class CheckBoxRenderer :

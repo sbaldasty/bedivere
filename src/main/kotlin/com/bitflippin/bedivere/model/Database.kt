@@ -51,6 +51,18 @@ data class Database(
         return claimSource
     }
 
+    fun addSupportClaim(): SupportClaim {
+        val supportClaim = SupportClaim(SupportClaimId(supportClaims.nextId()))
+        supportClaims.add(supportClaim)
+        return supportClaim
+    }
+
+    fun addSupportSource(): SupportSource {
+        val supportSource = SupportSource(SupportSourceId(supportSources.nextId()))
+        supportSources.add(supportSource)
+        return supportSource
+    }
+
     fun addSource(): Source {
         val source = Source(SourceId(sources.nextId()))
         sources.add(source)
@@ -63,6 +75,7 @@ data class Database(
         return support
     }
 
+    fun lookup(id: ClaimId) = claims.lookup(id)
     fun lookup(id: SourceId) = sources.lookup(id)
 
     fun lookupClaimSources(claim: Claim) = claimSources
@@ -75,6 +88,14 @@ data class Database(
 
     fun lookupClaims(support: Support) = claims
         .filter { it.id == support.claimId }
+        .toMutableList()
+
+    fun lookupSupportClaims(support: Support) = supportClaims
+        .filter { it.supportId == support.id }
+        .toMutableList()
+
+    fun lookupSupportSources(support: Support) = supportSources
+        .filter { it.supportId == support.id }
         .toMutableList()
 
     fun lookupSupports(claim: Claim) = supports

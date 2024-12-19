@@ -34,6 +34,7 @@ class TabbedPaneBinder(
             val scrollPane = JScrollPane(binder.component)
             content.add(scrollPane, BorderLayout.CENTER)
             ui.add(binder.title, content)
+            ui.selectedIndex = model.indexOf(binder)
         } else {
             binder.release()
             ui.selectedIndex = model.indexOf(existingBinder)

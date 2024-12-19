@@ -1,16 +1,13 @@
 package com.bitflippin.bedivere.ui
 
 import com.bitflippin.bedivere.editor.EditorState
-import com.bitflippin.bedivere.model.ClaimSource
-import com.bitflippin.bedivere.model.Source
 import com.bitflippin.bedivere.model.SourceId
-import com.bitflippin.bedivere.model.lookup
+import com.bitflippin.bedivere.model.Support
+import com.bitflippin.bedivere.model.SupportSource
 import com.bitflippin.bedivere.swing.bind.TableBinder
-import com.bitflippin.bedivere.swing.ext.CheckBoxRenderer
 import com.bitflippin.bedivere.swing.ext.ModularColumn
 import com.bitflippin.bedivere.swing.ext.PropertyTableCellRenderer
 import javax.swing.DefaultCellEditor
-import javax.swing.JCheckBox
 import javax.swing.JTable
 import javax.swing.JTextField
 import javax.swing.table.DefaultTableCellRenderer
@@ -20,7 +17,8 @@ private fun sourceColumn(editorState: EditorState) =
         "Source",
         32,
         { false },
-        ClaimSource::sourceId,
+        SupportSource::sourceId,
+        { x, y -> x.sourceId = y as SourceId },
         PropertyTableCellRenderer { x: SourceId -> if (x.value == 0) "(none)" else editorState.argmap.lookup(x).title },
         DefaultCellEditor(JTextField()),
     )
@@ -30,23 +28,18 @@ private fun descriptionColumn() =
         "Description",
         75,
         { true },
-        ClaimSource::description,
+        SupportSource::description,
+        { x, y -> x.description = y as String },
         DefaultTableCellRenderer(),
         DefaultCellEditor(JTextField()),
     )
 
-private fun enthymemeColumn() =
-    ModularColumn(
-        "Enthymeme",
-        32,
-        { true },
-        ClaimSource::enthymeme,
-        CheckBoxRenderer(),
-        DefaultCellEditor(JCheckBox()),
-    )
-
-class CitationTable(
+class SupportSourceTable(
     ui: JTable,
-    model: MutableList<ClaimSource>,
+    support: Support,
     private val editorState: EditorState
-) : TableBinder<ClaimSource>(ui, model, editorState.hub.citationListeners, listOf(sourceColumn(editorState), descriptionColumn(), enthymemeColumn()))
+) : TableBinder<SupportSource>(ui,
+    editorState.argmap.lookupSupportSources(support),
+    editorState.hub.supportSourceListeners,
+    listOf(sourceColumn(editorState), descriptionColumn()),
+    { editorState.argmap.lookupSupportSources(support).contains(it) })

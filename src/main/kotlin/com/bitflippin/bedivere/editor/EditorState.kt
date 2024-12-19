@@ -1,5 +1,6 @@
 package com.bitflippin.bedivere.editor
 
+import com.bitflippin.bedivere.model.ClaimId
 import com.bitflippin.bedivere.model.Database
 import com.bitflippin.bedivere.model.SourceId
 import com.bitflippin.bedivere.swing.bind.TabbedPaneBinder
@@ -10,5 +11,6 @@ class EditorState(
     var file: File,
     var hub: Hub,
     var detailTabs: TabbedPaneBinder,
-    var selectedSourceId: SourceId = SourceId(0),
+    var selectedClaimId: ClaimId = ClaimId(),
+    var selectedSourceId: SourceId = SourceId()
 )

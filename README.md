@@ -12,7 +12,7 @@ It's just me developing right now. Here are things I've done and plan to do.
 
 ### Bugs
 - [x] Fix concurrent change listener list modifications
-- [ ] Citations and sources should not have empty titles
+- [x] Citations and sources should not have empty titles
 - [ ] Only allow citation source settings when a citation is selected
 - [ ] Text table cells do not lose focus in time for save
 
@@ -27,7 +27,8 @@ It's just me developing right now. Here are things I've done and plan to do.
 - [x] Should be possible to remove citations from claims
 - [x] Editor tab focus should switch on opening something new
 - [x] No duplicate editor tabs
-- [ ] Add the support claims table
+- [x] Add the support claims table
+- [ ] Claims and sources should open when created 
 - [ ] Make tabbed editors closable
 
 ### Technical enhancements
@@ -37,6 +38,8 @@ It's just me developing right now. Here are things I've done and plan to do.
 - [x] Use swing editor for main form
 - [x] Forms belong in a Java source root
 - [x] Add kotlin linter
-- [ ] Move table binders into bind package
+- [x] Move table binders into bind package
+- [ ] Trawl for consistent naming after model refactor
+- [ ] Move data operations into hub
 - [ ] Fire change events from table cell edits
 - [ ] Clean up warnings from the Form GUI

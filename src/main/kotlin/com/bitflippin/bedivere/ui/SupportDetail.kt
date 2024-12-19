@@ -1,6 +1,8 @@
 package com.bitflippin.bedivere.ui
 
 import com.bitflippin.bedivere.editor.EditorState
+import com.bitflippin.bedivere.editor.addSupportClaim
+import com.bitflippin.bedivere.editor.addSupportSource
 import com.bitflippin.bedivere.form.SupportForm
 import com.bitflippin.bedivere.model.Strength
 import com.bitflippin.bedivere.model.Support
@@ -19,11 +21,12 @@ class SupportDetail(
 
     private val descriptionBinder = textFieldBinder(ui.descriptionTextField, Support::description)
     private val strengthBinder = comboBoxBinder(Strength.entries.toList(), ui.strengthComboBox, Support::strength)
-    private val citationsBinder = CitationTable(ui.citationTable, editorState.argmap.lookupClaimSources(model), editorState)
-    private val claimsBinder = SupportClaimTable(ui.claimTable, editorState.argmap.lookupClaims(model), editorState)
+    private val supportSourcesBinder = SupportSourceTable(ui.citationTable, model, editorState)
+    private val supportClaimsBinder = SupportClaimTable(ui.claimTable, model, editorState)
 
     init {
-        ui.addClaimButton.addActionListener {  }
+        ui.addClaimButton.addActionListener { addSupportClaim(editorState, model, editorState.argmap.lookup(editorState.selectedClaimId)) }
+        ui.addCitationButton.addActionListener { addSupportSource(editorState, model, editorState.argmap.lookup(editorState.selectedSourceId)) }
         ui.citationTable.enableAutoResize()
         ui.claimTable.enableAutoResize()
     }
@@ -31,7 +34,7 @@ class SupportDetail(
     override fun release() {
         descriptionBinder.release()
         strengthBinder.release()
-        citationsBinder.release()
-        claimsBinder.release()
+        supportSourcesBinder.release()
+        supportClaimsBinder.release()
     }
 }

@@ -2,9 +2,9 @@ package com.bitflippin.bedivere.ui
 
 import com.bitflippin.bedivere.editor.Change
 import com.bitflippin.bedivere.editor.EditorState
-import com.bitflippin.bedivere.editor.addCitation
+import com.bitflippin.bedivere.editor.addClaimSource
 import com.bitflippin.bedivere.editor.addSupport
-import com.bitflippin.bedivere.editor.removeClaimCitation
+import com.bitflippin.bedivere.editor.removeClaimSource
 import com.bitflippin.bedivere.editor.setCitationSource
 import com.bitflippin.bedivere.form.ClaimForm
 import com.bitflippin.bedivere.form.SupportForm
@@ -32,7 +32,7 @@ class ClaimDetail(
     private val titleBinder = textFieldBinder(ui.titleTextField, Claim::title)
     private val descriptionBinder = textFieldBinder(ui.descriptionTextField, Claim::description)
     private val confidenceBinder = comboBoxBinder(Confidence.entries.toList(), ui.confidenceComboBox, Claim::confidence)
-    private val citationsBinder = CitationTable(ui.citationTable, editorState.argmap.lookupClaimSources(model), editorState)
+    private val citationsBinder = ClaimSourceTable(ui.citationTable, model, editorState)
     private val supportBinders = ArrayList<Pair<SupportDetail, SupportForm>>()
     private val supportGridConstraints = GridBagConstraints()
 
@@ -43,8 +43,8 @@ class ClaimDetail(
         supportGridConstraints.insets = Insets(5, 5, 5, 5)
 
         ui.setSourceButton.addActionListener { setCitationSource(editorState, citationsBinder.selection()) }
-        ui.addCitationButton.addActionListener { addCitation(editorState, model) }
-        ui.removeCitationButton.addActionListener { removeClaimCitation(editorState, model, citationsBinder.selection()) }
+        ui.addCitationButton.addActionListener { addClaimSource(editorState, model) }
+        ui.removeCitationButton.addActionListener { removeClaimSource(editorState, model, citationsBinder.selection()) }
         ui.addSupportButton.addActionListener { addSupport(editorState, model) }
         ui.citationTable.enableAutoResize()
 
@@ -63,7 +63,7 @@ class ClaimDetail(
     }
 
     private fun onSupportChange(support: Support, change: Change) {
-        if (change == Change.ADD) {
+        if (support.claimId == model.id && change == Change.ADD) {
             addSupportPanel(support)
         }
     }

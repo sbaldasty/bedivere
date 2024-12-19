@@ -9,7 +9,8 @@ abstract class TableBinder<E>(
     final override val ui: JTable,
     final override val model: MutableList<E>,
     listeners: MutableSet<ChangeListener<E>>,
-    columns: List<ModularColumn<E>>
+    columns: List<ModularColumn<E>>,
+    private val criterion: (E) -> Boolean
 ) : SimpleBinder<JTable, MutableList<E>, E>(listeners) {
 
     private val columnDrivenTableModel = ColumnDrivenTableModel(columns, model)
@@ -27,19 +28,25 @@ abstract class TableBinder<E>(
     fun selection() = model[ui.selectedRow]
 
     override fun onModelAdd(target: E) {
-        val index = model.size
-        model.add(target)
-        columnDrivenTableModel.fireTableRowsInserted(index, index)
+        if (criterion(target)) {
+            val index = model.size
+            model.add(target)
+            columnDrivenTableModel.fireTableRowsInserted(index, index)
+        }
     }
 
     override fun onModelRemove(target: E) {
-        val index = model.indexOf(target)
-        model.remove(target)
-        columnDrivenTableModel.fireTableRowsDeleted(index, index)
+        if (criterion(target)) {
+            val index = model.indexOf(target)
+            model.remove(target)
+            columnDrivenTableModel.fireTableRowsDeleted(index, index)
+        }
     }
 
     override fun onModelUpdate(target: E) {
-        val index = model.indexOf(target)
-        columnDrivenTableModel.fireTableRowsUpdated(index, index)
+        if (criterion(target)) {
+            val index = model.indexOf(target)
+            columnDrivenTableModel.fireTableRowsUpdated(index, index)
+        }
     }
 }

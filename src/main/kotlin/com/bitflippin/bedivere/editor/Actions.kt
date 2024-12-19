@@ -4,14 +4,16 @@ import com.bitflippin.bedivere.model.Claim
 import com.bitflippin.bedivere.model.ClaimSource
 import com.bitflippin.bedivere.model.Source
 import com.bitflippin.bedivere.model.Support
+import com.bitflippin.bedivere.model.SupportClaim
+import com.bitflippin.bedivere.model.SupportSource
 
-fun addCitation(
+fun addClaimSource(
     editorState: EditorState,
     claim: Claim,
 ) {
     val result = editorState.argmap.addClaimSource()
     result.claimId = claim.id
-    broadcastChange(editorState.hub.citationListeners, result, Change.ADD)
+    broadcastChange(editorState.hub.claimSourceListeners, result, Change.ADD)
 }
 
 fun addClaim(editorState: EditorState): Claim {
@@ -36,13 +38,29 @@ fun addSupport(
     return result
 }
 
-fun removeClaimCitation(
+fun addSupportClaim(editorState: EditorState, support: Support, claim: Claim): SupportClaim {
+    val result = editorState.argmap.addSupportClaim()
+    result.supportId = support.id
+    result.claimId = claim.id
+    broadcastChange(editorState.hub.supportClaimListeners, result, Change.ADD)
+    return result
+}
+
+fun addSupportSource(editorState: EditorState, support: Support, source: Source): SupportSource {
+    val result = editorState.argmap.addSupportSource()
+    result.supportId = support.id
+    result.sourceId = source.id
+    broadcastChange(editorState.hub.supportSourceListeners, result, Change.ADD)
+    return result
+}
+
+fun removeClaimSource(
     editorState: EditorState,
     claim: Claim,
     citation: ClaimSource,
 ) {
     editorState.argmap.claimSources.remove(citation)
-    broadcastChange(editorState.hub.citationListeners, citation, Change.REMOVE)
+    broadcastChange(editorState.hub.claimSourceListeners, citation, Change.REMOVE)
 }
 
 fun setCitationSource(
@@ -50,5 +68,5 @@ fun setCitationSource(
     citation: ClaimSource,
 ) {
     citation.sourceId = editorState.selectedSourceId
-    broadcastChange(editorState.hub.citationListeners, citation, Change.UPDATE)
+    broadcastChange(editorState.hub.claimSourceListeners, citation, Change.UPDATE)
 }

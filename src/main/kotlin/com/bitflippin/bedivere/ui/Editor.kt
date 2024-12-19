@@ -5,6 +5,7 @@ import com.bitflippin.bedivere.editor.EditorState
 import com.bitflippin.bedivere.editor.addClaim
 import com.bitflippin.bedivere.editor.addSource
 import com.bitflippin.bedivere.form.MainForm
+import com.bitflippin.bedivere.model.ClaimId
 import com.bitflippin.bedivere.model.SourceId
 import com.bitflippin.bedivere.swing.bind.Binder
 import com.bitflippin.bedivere.swing.bind.ListBinder
@@ -30,9 +31,14 @@ class Editor(
         ui.claimsList.setCellRenderer { x -> x.title }
         ui.sourcesList.addDoubleClickListener { model.detailTabs.open(SourceDetail(it, model)) }
         ui.sourcesList.setCellRenderer { x -> x.title }
+        ui.claimsList.addListSelectionListener {
+            if (!it.valueIsAdjusting) {
+                model.selectedClaimId = ui.claimsList.selectedValue?.id ?: ClaimId()
+            }
+        }
         ui.sourcesList.addListSelectionListener {
             if (!it.valueIsAdjusting) {
-                model.selectedSourceId = ui.sourcesList.selectedValue?.id ?: SourceId(0)
+                model.selectedSourceId = ui.sourcesList.selectedValue?.id ?: SourceId()
             }
         }
     }
