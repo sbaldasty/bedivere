@@ -39,6 +39,7 @@ class Editor(
         ui.sourcesList.addListSelectionListener {
             if (!it.valueIsAdjusting) {
                 model.selectedSourceId = ui.sourcesList.selectedValue?.id ?: SourceId()
+                model.hub.contextualSourceListeners.forEach { it() }
             }
         }
     }

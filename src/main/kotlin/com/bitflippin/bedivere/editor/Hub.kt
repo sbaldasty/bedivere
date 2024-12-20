@@ -24,4 +24,5 @@ class Hub {
     val supportListeners = CopyOnWriteArraySet<ChangeListener<Support>>()
     val supportClaimListeners = CopyOnWriteArraySet<ChangeListener<SupportClaim>>()
     val supportSourceListeners = CopyOnWriteArraySet<ChangeListener<SupportSource>>()
+    val contextualSourceListeners = CopyOnWriteArraySet<() -> Unit>()
 }

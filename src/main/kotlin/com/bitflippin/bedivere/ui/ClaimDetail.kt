@@ -15,6 +15,7 @@ import com.bitflippin.bedivere.swing.bind.TabBinder
 import com.bitflippin.bedivere.swing.bind.comboBoxBinder
 import com.bitflippin.bedivere.swing.bind.textFieldBinder
 import com.bitflippin.bedivere.swing.ext.enableAutoResize
+import com.bitflippin.bedivere.swing.ext.enableOnSelection
 import java.awt.GridBagConstraints
 import java.awt.Insets
 import javax.swing.JComponent
@@ -45,11 +46,18 @@ class ClaimDetail(
         ui.setSourceButton.addActionListener { setCitationSource(editorState, citationsBinder.selection()) }
         ui.addCitationButton.addActionListener { addClaimSource(editorState, model) }
         ui.removeCitationButton.addActionListener { removeClaimSource(editorState, model, citationsBinder.selection()) }
+        ui.removeCitationButton.enableOnSelection(ui.citationTable)
         ui.addSupportButton.addActionListener { addSupport(editorState, model) }
         ui.citationTable.enableAutoResize()
-
+        ui.citationTable.selectionModel.addListSelectionListener {
+            if (!it.valueIsAdjusting) {
+                updateSetSourceEnabled()
+            }
+        }
         editorState.argmap.lookupSupports(model).forEach { addSupportPanel(it) }
         editorState.hub.supportListeners.add(this::onSupportChange)
+        editorState.hub.contextualSourceListeners.add { updateSetSourceEnabled() }
+        updateSetSourceEnabled()
     }
 
     private fun addSupportPanel(support: Support) {
@@ -60,6 +68,10 @@ class ClaimDetail(
         ui.contentPanel.revalidate()
         ui.contentPanel.repaint()
         supportBinders.add(Pair(binder, binder.ui))
+    }
+
+    private fun updateSetSourceEnabled() {
+        ui.setSourceButton.isEnabled = editorState.selectedSourceId.value != 0 && ui.citationTable.selectedRow != -1
     }
 
     private fun onSupportChange(support: Support, change: Change) {

@@ -13,7 +13,7 @@ It's just me developing right now. Here are things I've done and plan to do.
 ### Bugs
 - [x] Fix concurrent change listener list modifications
 - [x] Citations and sources should not have empty titles
-- [ ] Only allow citation source settings when a citation is selected
+- [x] Only allow citation source settings when a citation and source are selected
 - [ ] Text table cells do not lose focus in time for save
 
 ### Functionality
