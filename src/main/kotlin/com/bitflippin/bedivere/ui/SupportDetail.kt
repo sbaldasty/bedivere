@@ -3,6 +3,7 @@ package com.bitflippin.bedivere.ui
 import com.bitflippin.bedivere.editor.EditorState
 import com.bitflippin.bedivere.editor.addSupportClaim
 import com.bitflippin.bedivere.editor.addSupportSource
+import com.bitflippin.bedivere.editor.removeSupportClaim
 import com.bitflippin.bedivere.form.SupportForm
 import com.bitflippin.bedivere.model.Strength
 import com.bitflippin.bedivere.model.Support
@@ -27,8 +28,29 @@ class SupportDetail(
     init {
         ui.addClaimButton.addActionListener { addSupportClaim(editorState, model, editorState.argmap.lookup(editorState.selectedClaimId)) }
         ui.addCitationButton.addActionListener { addSupportSource(editorState, model, editorState.argmap.lookup(editorState.selectedSourceId)) }
+        ui.removeClaimButton.addActionListener { removeSupportClaim(editorState, supportClaimsBinder.selection()) }
         ui.citationTable.enableAutoResize()
         ui.claimTable.enableAutoResize()
+        ui.claimTable.selectionModel.addListSelectionListener {
+            if (!it.valueIsAdjusting) {
+                updateRemoveClaimButtonEnabled()
+            }
+        }
+        ui.citationTable.selectionModel.addListSelectionListener {
+            if (!it.valueIsAdjusting) {
+                updateRemoveCitationButtonEnabled()
+            }
+        }
+        updateRemoveCitationButtonEnabled()
+        updateRemoveClaimButtonEnabled()
+    }
+
+    private fun updateRemoveCitationButtonEnabled() {
+        ui.removeCitationButton.isEnabled = ui.citationTable.selectedRow != -1
+    }
+
+    private fun updateRemoveClaimButtonEnabled() {
+        ui.removeClaimButton.isEnabled = ui.claimTable.selectedRow != -1
     }
 
     override fun release() {

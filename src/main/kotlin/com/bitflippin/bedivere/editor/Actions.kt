@@ -63,6 +63,14 @@ fun removeClaimSource(
     broadcastChange(editorState.hub.claimSourceListeners, citation, Change.REMOVE)
 }
 
+fun removeSupportClaim(
+    editorState: EditorState,
+    supportClaim: SupportClaim
+) {
+    editorState.argmap.supportClaims.remove(supportClaim)
+    broadcastChange(editorState.hub.supportClaimListeners, supportClaim, Change.REMOVE)
+}
+
 fun setCitationSource(
     editorState: EditorState,
     citation: ClaimSource,
